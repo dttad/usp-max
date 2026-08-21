@@ -1,21 +1,14 @@
-"""Async concurrent sitemap crawler using a flat worker-pool design.
+"""Async crawler with optional lxml parsing (Phase 7a).
 
-Architecture:
-- N workers consume URLs from an asyncio queue.
-- A ``url_normalize`` hook rewrites children URLs to canonical form
-  BEFORE they are stored / enqueued. This keeps ``_results`` keys
-  consistent with the URLs that the workers actually fetch.
-- When a worker parses an index sitemap, it enqueues children and
-  records the parent → children relationship.
-- After the queue drains, we walk the results dict bottom-up and
-  rebuild index sitemaps with their actual children.
-
-This avoids nested task groups and yields true concurrent fetching.
+Set ``USP_USE_LXML=1`` (default for this script) to use the lxml
+backend for ``urlset`` / ``sitemapindex``. Falls back to expat when
+the content is RSS/Atom.
 """
 from __future__ import annotations
 
 import asyncio
 import logging
+import os
 import re
 import time
 from typing import Any, Callable
@@ -34,7 +27,9 @@ from usp.objects.sitemap import (
     IndexWebsiteSitemap,
     IndexXMLSitemap,
     InvalidSitemap,
+    PagesXMLSitemap,
 )
+from usp.web_client.abstract_client import NoWebClientException
 
 from .async_client import AsyncWebClient, ungzipped_bytes
 
@@ -43,11 +38,85 @@ log = logging.getLogger(__name__)
 INDEX_TYPES = (IndexXMLSitemap, IndexRobotsTxtSitemap)
 
 URLNormalizeType = Callable[[str], str]
-"""Rewrite a URL before storing / enqueueing. Useful for routing
-absolute upstream URLs to a local replay server."""
 
 
-def _select_parser(url: str, content: bytes, *, parser_kwargs: dict[str, Any]):
+def _sniff_root(content: bytes) -> str | None:
+    """Return 'pages' / 'index' / 'feed' / None based on root element.
+
+    Skips over ``<?xml ...?>`` declarations and BOM markers before
+    looking at the root element.
+    """
+    import gzip
+    raw = content
+    if raw[:2] == b"\x1f\x8b":
+        try:
+            raw = gzip.decompress(raw)
+        except Exception:
+            pass
+    head = raw.lstrip()[:500].lower()
+    # Skip <?xml ... ?> declaration
+    while head.startswith(b"<?"):
+        end = head.find(b"?>")
+        if end < 0:
+            break
+        head = head[end + 2:].lstrip()
+    if head.startswith(b"<urlset"):
+        return "pages"
+    if head.startswith(b"<sitemapindex"):
+        return "index"
+    if head.startswith(b"<rss") or head.startswith(b"<feed"):
+        return "feed"
+    return None
+
+
+def _select_parser_lxml(url: str, content: bytes, *, parser_kwargs: dict[str, Any]):
+    """Select between lxml (pages/index) and expat (RSS/Atom/text)."""
+    from .lxml_parser import (
+        parse_lxml_pages,
+        parse_lxml_index,
+    )
+
+    kind = _sniff_root(content)
+    no_fetch = lambda u, l, p: False  # noqa: E731
+
+    if kind == "pages":
+        pages = parse_lxml_pages(content, url)
+        return PagesXMLSitemap(url=url, pages=pages)
+    if kind == "index":
+        child_urls = parse_lxml_index(content, url)
+        # Build IndexXMLSitemap with empty children; crawler will fill them.
+        return IndexXMLSitemap(url=url, sub_sitemaps=[])
+    if kind == "feed":
+        # Fallback to expat for RSS/Atom for now.
+        from usp.fetch_parse import PagesRSSSitemapParser, PagesAtomSitemapParser
+        text = content.decode("utf-8", errors="replace")
+        if kind == "feed":
+            # try atom then rss by root
+            stripped = content.lstrip()[:50].lower()
+            if stripped.startswith(b"<feed"):
+                return PagesAtomSitemapParser(
+                    content=text, recurse_callback=no_fetch, **parser_kwargs
+                ).sitemap()
+            return PagesRSSSitemapParser(
+                content=text, recurse_callback=no_fetch, **parser_kwargs
+            ).sitemap()
+    if url.endswith("/robots.txt"):
+        return IndexRobotsTxtSitemapParser(
+            content=content.decode("utf-8", errors="replace"),
+            web_client=None,
+            recurse_callback=no_fetch,
+            **parser_kwargs,
+        )
+    return PlainTextSitemapParser(
+        content=content.decode("utf-8", errors="replace"),
+        web_client=None,
+        recurse_callback=no_fetch,
+        **parser_kwargs,
+    )
+
+
+def _select_parser_expat(url: str, content: bytes, *, parser_kwargs: dict[str, Any]):
+    """Original expat-based parser."""
     no_fetch = lambda u, l, p: False  # noqa: E731
     stripped = content[:20].lstrip()
     if stripped.startswith(b"<"):
@@ -72,22 +141,17 @@ def _select_parser(url: str, content: bytes, *, parser_kwargs: dict[str, Any]):
     )
 
 
-def _extract_child_urls(parser: Any, level: int, parent_urls: set[str],
-                        recurse_list_callback: RecurseListCallbackType) -> list[str]:
-    raw: list[str] = []
-    cp = getattr(parser, "_concrete_parser", None)
-    if cp is not None and hasattr(cp, "_sub_sitemap_urls"):
-        raw = list(cp._sub_sitemap_urls)
-    elif isinstance(parser, IndexRobotsTxtSitemapParser):
-        for line in parser._content.splitlines():
-            m = re.search(r"^site-?map:\s*(.+?)$", line.strip(), flags=re.IGNORECASE)
-            if m:
-                raw.append(m.group(1).strip())
-    return recurse_list_callback(raw, level, parent_urls)
+def _extract_child_urls_from_lxml_index(parser, content: bytes, level: int,
+                                        parent_urls: set[str],
+                                        recurse_list_callback) -> list[str]:
+    """After lxml index parsing, we need to re-parse for the child URLs."""
+    from .lxml_parser import parse_lxml_index
+    raw = content
+    return recurse_list_callback(parse_lxml_index(raw, ""), level, parent_urls)
 
 
 class AsyncCrawler:
-    """Flat worker-pool sitemap crawler."""
+    """Flat worker-pool sitemap crawler with optional lxml backend."""
 
     def __init__(
         self,
@@ -101,6 +165,7 @@ class AsyncCrawler:
         recurse_callback: RecurseCallbackType | None = None,
         recurse_list_callback: RecurseListCallbackType | None = None,
         url_normalize: URLNormalizeType | None = None,
+        use_lxml: bool | None = None,
     ):
         self._web_client = web_client
         self._concurrency = max(1, concurrency)
@@ -111,6 +176,9 @@ class AsyncCrawler:
         self._recurse_callback = recurse_callback or (lambda u, l, p: True)
         self._recurse_list_callback = recurse_list_callback or (lambda u, l, p: u)
         self._url_normalize = url_normalize or (lambda u: u)
+        if use_lxml is None:
+            use_lxml = bool(int(os.environ.get("USP_USE_LXML", "1")))
+        self._use_lxml = use_lxml
 
         self._results: dict[str, AbstractSitemap] = {}
         self._children_of: dict[str, list[str]] = {}
@@ -133,7 +201,6 @@ class AsyncCrawler:
     # ---------- public API ----------
 
     async def crawl(self, root_urls: list[str]) -> AbstractSitemap:
-        """Crawl from the given root URLs and return a synthetic root sitemap."""
         self._started_at = time.monotonic()
         norm_roots = [self._url_normalize(u) for u in root_urls]
         queue: asyncio.Queue[tuple[str, set[str], int] | None] = asyncio.Queue()
@@ -222,21 +289,50 @@ class AsyncCrawler:
             parent_urls=new_parents,
             recurse_list_callback=self._recurse_list_callback,
         )
+        kind = _sniff_root(content_bytes)
         try:
-            parser = _select_parser(final_url, content_bytes, parser_kwargs=parser_kwargs)
-            sitemap = parser.sitemap()
+            if self._use_lxml and kind in ("pages", "index"):
+                from .lxml_parser import parse_lxml_pages, parse_lxml_index
+                if kind == "pages":
+                    pages = parse_lxml_pages(content_bytes, final_url)
+                    sitemap = PagesXMLSitemap(url=final_url, pages=pages)
+                else:  # index
+                    child_urls = parse_lxml_index(content_bytes, final_url)
+                    sitemap = IndexXMLSitemap(url=final_url, sub_sitemaps=[])
+            else:
+                # Expat fallback
+                parser = _select_parser_expat(final_url, content_bytes, parser_kwargs=parser_kwargs)
+                sitemap = parser.sitemap()
+        except NoWebClientException:
+            self._results[url] = InvalidSitemap(url=url, reason="un-fetched child")
+            return
         except Exception as ex:
             log.warning("parse failed for %s: %s", final_url, ex)
-            self._results[final_url] = InvalidSitemap(
-                url=final_url, reason=f"parse: {ex}"
-            )
+            self._results[final_url] = InvalidSitemap(url=final_url, reason=f"parse: {ex}")
             return
 
         # Enqueue children if index
         if isinstance(sitemap, INDEX_TYPES):
-            child_urls = _extract_child_urls(
-                parser, level, new_parents, self._recurse_list_callback
-            )
+            if self._use_lxml and kind == "index":
+                # We already have child_urls from the lxml parse
+                child_urls_raw = child_urls
+            else:
+                # Re-extract via expat
+                # We need the parser — but expat parsers store URLs internally
+                from usp.fetch_parse import IndexRobotsTxtSitemapParser
+                parser = _select_parser_expat(final_url, content_bytes, parser_kwargs=parser_kwargs)
+                if hasattr(parser, "_concrete_parser") and parser._concrete_parser is not None:
+                    cp = parser._concrete_parser
+                    child_urls_raw = list(getattr(cp, "_sub_sitemap_urls", []))
+                elif isinstance(parser, IndexRobotsTxtSitemapParser):
+                    child_urls_raw = []
+                    for line in parser._content.splitlines():
+                        m = re.search(r"^site-?map:\s*(.+?)$", line.strip(), flags=re.IGNORECASE)
+                        if m:
+                            child_urls_raw.append(m.group(1).strip())
+                else:
+                    child_urls_raw = []
+            child_urls = self._recurse_list_callback(child_urls_raw, level, new_parents)
             queued: list[str] = []
             for child in child_urls:
                 norm_child = self._url_normalize(child)
@@ -253,19 +349,12 @@ class AsyncCrawler:
 
         self._results[final_url] = sitemap
 
-    def _finalize(self, root_urls: list[str]) -> AbstractSitemap:
-        """Walk bottom-up: rebuild children before their parents."""
-        self._rebuild_recursive(root_urls)
-        return self._build_root(root_urls)
-
     def _rebuild_recursive(self, parent_urls: list[str]) -> None:
         for parent_url in parent_urls:
             child_urls = self._children_of.get(parent_url)
             if not child_urls:
                 continue
-            # Recurse into children first
             self._rebuild_recursive(child_urls)
-            # Now children are rebuilt; build parent
             children = [self._results[c] for c in child_urls if c in self._results]
             current = self._results.get(parent_url)
             if isinstance(current, IndexXMLSitemap):
@@ -276,6 +365,10 @@ class AsyncCrawler:
                 self._results[parent_url] = IndexRobotsTxtSitemap(
                     url=parent_url, sub_sitemaps=children
                 )
+
+    def _finalize(self, root_urls: list[str]) -> AbstractSitemap:
+        self._rebuild_recursive(root_urls)
+        return self._build_root(root_urls)
 
     def _build_root(self, root_urls: list[str]) -> AbstractSitemap:
         top: list[AbstractSitemap] = []
@@ -289,5 +382,4 @@ class AsyncCrawler:
 
 
 async def run_sync(coro):
-    """Helper for callers that just want to drive a coroutine to completion."""
     return await coro
