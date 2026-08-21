@@ -1,0 +1,86 @@
+{
+  "kind": "usp-bench-baseline",
+  "version": 1,
+  "runs": [
+    {
+      "profile": "hostile",
+      "fanout_cap": 50,
+      "n_runs": 1,
+      "wall_s_min": 58.468,
+      "wall_s_max": 58.468,
+      "urls_per_s_median": 336.9,
+      "peak_rss_mb_median": 96.4,
+      "urls_total": 19697
+    },
+    {
+      "profile": "hostile",
+      "fanout_cap": 200,
+      "n_runs": 1,
+      "wall_s_min": 186.812,
+      "wall_s_max": 186.812,
+      "urls_per_s_median": 420.4,
+      "peak_rss_mb_median": 91.7,
+      "urls_total": 78541
+    },
+    {
+      "profile": "lan",
+      "fanout_cap": 50,
+      "n_runs": 1,
+      "wall_s_min": 28.591,
+      "wall_s_max": 28.591,
+      "urls_per_s_median": 688.9,
+      "peak_rss_mb_median": 84.3,
+      "urls_total": 19697
+    },
+    {
+      "profile": "lan",
+      "fanout_cap": 200,
+      "n_runs": 1,
+      "wall_s_min": 57.066,
+      "wall_s_max": 57.066,
+      "urls_per_s_median": 1376.3,
+      "peak_rss_mb_median": 97.8,
+      "urls_total": 78541
+    },
+    {
+      "profile": "vn-google",
+      "fanout_cap": 50,
+      "n_runs": 1,
+      "wall_s_min": 49.063,
+      "wall_s_max": 49.063,
+      "urls_per_s_median": 401.5,
+      "peak_rss_mb_median": 97.2,
+      "urls_total": 19697
+    },
+    {
+      "profile": "vn-google",
+      "fanout_cap": 200,
+      "n_runs": 1,
+      "wall_s_min": 130.46,
+      "wall_s_max": 130.46,
+      "urls_per_s_median": 602.0,
+      "peak_rss_mb_median": 97.4,
+      "urls_total": 78541
+    },
+    {
+      "profile": "zero",
+      "fanout_cap": 50,
+      "n_runs": 1,
+      "wall_s_min": 31.338,
+      "wall_s_max": 31.338,
+      "urls_per_s_median": 628.5,
+      "peak_rss_mb_median": 84.0,
+      "urls_total": 19697
+    },
+    {
+      "profile": "zero",
+      "fanout_cap": 200,
+      "n_runs": 1,
+      "wall_s_min": 63.881,
+      "wall_s_max": 63.881,
+      "urls_per_s_median": 1229.5,
+      "peak_rss_mb_median": 97.5,
+      "urls_total": 78541
+    }
+  ]
+}

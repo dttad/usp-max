@@ -1,0 +1,53 @@
+
+  _     ._   __/__   _ _  _  _ _/_   Recorded: 15:16:49  Samples:  79557
+ /_//_/// /_\ / //_// / //_'/ //     Duration: 86.894    CPU time: 83.896
+/   _/                      v4.7.3
+
+Program: bench/profiles/_profile-zero-200.py
+
+86.889 <module>  _profile-zero-200.py:1
+└─ 86.778 crawl  bench/_profile_runner.py:35
+   ├─ 83.730 sitemap_tree_for_homepage  usp/tree.py:42
+   │  └─ 83.730 SitemapFetcher.sitemap  usp/fetch_parse.py:148
+   │     └─ 83.726 IndexRobotsTxtSitemapParser.sitemap  usp/fetch_parse.py:323
+   │        └─ 83.725 SitemapFetcher.sitemap  usp/fetch_parse.py:148
+   │           └─ 83.686 XMLSitemapParser.sitemap  usp/fetch_parse.py:444
+   │              ├─ 63.048 IndexXMLSitemapParser.sitemap  usp/fetch_parse.py:726
+   │              │  └─ 63.029 SitemapFetcher.sitemap  usp/fetch_parse.py:148
+   │              │     ├─ 59.831 XMLSitemapParser.sitemap  usp/fetch_parse.py:444
+   │              │     │  ├─ 20.464 XMLSitemapParser._xml_element_start  usp/fetch_parse.py:538
+   │              │     │  │  ├─ 9.188 PagesXMLSitemapParser.xml_element_start  usp/fetch_parse.py:959
+   │              │     │  │  │  ├─ 7.767 [self]  usp/fetch_parse.py
+   │              │     │  │  │  └─ 0.879 PagesXMLSitemapParser.xml_element_start  usp/fetch_parse.py:628
+   │              │     │  │  ├─ 7.488 XMLSitemapParser.__normalize_xml_element_name  usp/fetch_parse.py:480
+   │              │     │  │  │  ├─ 5.796 [self]  usp/fetch_parse.py
+   │              │     │  │  │  └─ 0.906 str.split  <built-in>
+   │              │     │  │  └─ 3.787 [self]  usp/fetch_parse.py
+   │              │     │  ├─ 19.842 XMLSitemapParser._xml_element_end  usp/fetch_parse.py:574
+   │              │     │  │  ├─ 9.073 PagesXMLSitemapParser.xml_element_end  usp/fetch_parse.py:998
+   │              │     │  │  │  ├─ 7.967 [self]  usp/fetch_parse.py
+   │              │     │  │  │  └─ 1.086 PagesXMLSitemapParser.xml_element_end  usp/fetch_parse.py:639
+   │              │     │  │  ├─ 7.108 XMLSitemapParser.__normalize_xml_element_name  usp/fetch_parse.py:480
+   │              │     │  │  │  ├─ 5.423 [self]  usp/fetch_parse.py
+   │              │     │  │  │  └─ 0.947 str.split  <built-in>
+   │              │     │  │  └─ 3.660 [self]  usp/fetch_parse.py
+   │              │     │  ├─ 16.099 [self]  usp/fetch_parse.py
+   │              │     │  └─ 3.384 PagesXMLSitemapParser.sitemap  usp/fetch_parse.py:1078
+   │              │     │     └─ 3.069 PagesXMLSitemap.__init__  usp/objects/sitemap.py:216
+   │              │     │        └─ 3.069 PagesXMLSitemap._dump_pages  usp/objects/sitemap.py:227
+   │              │     │           └─ 3.040 dump  <built-in>
+   │              │     └─ 2.384 ungzipped_response_content  usp/helpers.py:262
+   │              │        └─ 2.024 gunzip  usp/helpers.py:219
+   │              │           └─ 1.384 GzipFile.read  gzip.py:296
+   │              │                 [2 frames hidden]  _compression, gzip
+   │              └─ 20.212 XMLSitemapParser._xml_element_end  usp/fetch_parse.py:574
+   │                 └─ 19.972 IndexXMLSitemapParser.xml_element_end  usp/fetch_parse.py:712
+   │                    ├─ 18.191 [self]  usp/fetch_parse.py
+   │                    └─ 1.659 is_http_url  usp/helpers.py:47
+   └─ 3.023 IndexWebsiteSitemap.all_pages  usp/objects/sitemap.py:396
+      └─ 3.022 IndexRobotsTxtSitemap.all_pages  usp/objects/sitemap.py:396
+         └─ 3.021 IndexXMLSitemap.all_pages  usp/objects/sitemap.py:396
+            └─ 3.019 PagesXMLSitemap.all_pages  usp/objects/sitemap.py:113
+               └─ 2.629 PagesXMLSitemap.pages  usp/objects/sitemap.py:281
+                  └─ 2.628 load  <built-in>
+
