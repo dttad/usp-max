@@ -53,11 +53,17 @@ async = [
 lxml = [
     "lxml>=5.0,<7.0",
 ]
-# Convenience bundle for the Phase 3+7a stack.
-perf = [
+# Rust-accelerated parser. Builds a tiny PyO3 + quick-xml extension.
+# Requires maturin and a Rust toolchain on the build machine.
+rust = [
+    "maturin>=1.0,<2.0",
+]
+# Convenience bundles.
+fast = [
     "httpx[http2]>=0.27,<1.0",
     "anyio>=4.0,<5.0",
     "lxml>=5.0,<7.0",
+    "maturin>=1.0,<2.0",
 ]
 
 [project.urls]
@@ -83,8 +89,8 @@ perf = [
 docs = [
     "sphinx>=9.0.0,<10",
     "sphinx-autobuild>=2025.8.25",
-    "sphinx-design>=0.6.1",
-    "furo>=2025.9.25",
+    "sphinx-design>=0.6.1,<0.7.0",
+    "furo>=2025.9.25,<2026.0.0",
     "sphinxext-opengraph>=0.13.0,<0.14.0",
     "sphinx-copybutton>=0.5.2,<0.6.0",
 ]
