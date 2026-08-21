@@ -1,31 +1,31 @@
 {
-  "run_id": "23270e1f",
-  "git_sha": "93a1c5c",
+  "run_id": "47dab061",
+  "git_sha": "f0caec6",
   "phase": "P3-async",
   "mode": "replay-async",
   "profile": "zero",
   "fanout_cap": 50,
   "concurrency": 16,
   "homepage": "http://127.0.0.1:8765",
-  "wall_s": 28.015,
+  "wall_s": 26.618,
   "urls_total": 19697,
   "sitemaps_fetched": 53,
-  "urls_per_s": 703.1,
+  "urls_per_s": 740.0,
   "http": {
     "requests": 103,
     "s2xx": 53,
     "s3xx": 0,
-    "s404": 48,
+    "s404": 42,
     "s429": 0,
     "s5xx": 0,
     "bytes_wire": 21222179,
     "bytes_uncompressed": 21222179,
-    "lat_p50_ms": 163.3,
-    "lat_p95_ms": 3060.1,
-    "lat_p99_ms": 13417.5
+    "lat_p50_ms": 1121.3,
+    "lat_p95_ms": 13341.0,
+    "lat_p99_ms": 13342.0
   },
   "mem": {
-    "peak_rss_mb": 705.7
+    "peak_rss_mb": 84.5
   },
-  "ts": "2026-08-21T10:00:49Z"
+  "ts": "2026-08-21T10:07:59Z"
 }

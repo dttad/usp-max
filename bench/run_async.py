@@ -89,7 +89,6 @@ def main() -> int:
         return base + urlparse(url).path
 
     async def run_async():
-        nonlocal_urls = []
         stats = {
             "requests": 0, "s2xx": 0, "s3xx": 0, "s4xx": 0, "s5xx": 0,
             "s404": 0, "s429": 0,
@@ -129,10 +128,13 @@ def main() -> int:
             tree = await crawler.crawl([base + "/robots.txt"])
             wall = time.monotonic() - t0
 
-            urls = list(tree.all_pages())
+            # Iterate pages WITHOUT materializing into a list, to keep memory low.
+            urls_total = 0
+            for _page in tree.all_pages():
+                urls_total += 1
             return {
                 "wall_s": wall,
-                "urls_total": len(urls),
+                "urls_total": urls_total,
                 "sitemaps_fetched": crawler.sitemaps_fetched,
                 "stat": stats,
             }, tree

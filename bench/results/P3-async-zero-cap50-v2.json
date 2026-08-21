@@ -1,31 +1,31 @@
 {
-  "run_id": "af58bb69",
+  "run_id": "11c7daf4",
   "git_sha": "f0caec6",
   "phase": "P3-async",
   "mode": "replay-async",
-  "profile": "vn-google",
+  "profile": "zero",
   "fanout_cap": 50,
   "concurrency": 16,
   "homepage": "http://127.0.0.1:8765",
-  "wall_s": 27.588,
+  "wall_s": 26.026,
   "urls_total": 19697,
   "sitemaps_fetched": 53,
-  "urls_per_s": 714.0,
+  "urls_per_s": 756.8,
   "http": {
     "requests": 103,
     "s2xx": 53,
     "s3xx": 0,
-    "s404": 50,
+    "s404": 45,
     "s429": 0,
     "s5xx": 0,
     "bytes_wire": 21222179,
     "bytes_uncompressed": 21222179,
-    "lat_p50_ms": 1696.7,
-    "lat_p95_ms": 7020.4,
-    "lat_p99_ms": 7807.3
+    "lat_p50_ms": 627.9,
+    "lat_p95_ms": 5403.1,
+    "lat_p99_ms": 12667.8
   },
   "mem": {
-    "peak_rss_mb": 83.3
+    "peak_rss_mb": 84.0
   },
-  "ts": "2026-08-21T10:11:49Z"
+  "ts": "2026-08-21T10:06:52Z"
 }
