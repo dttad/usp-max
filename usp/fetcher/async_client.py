@@ -3,6 +3,7 @@
 Provides a drop-in for ``AbstractWebClient`` but supports async HTTP/2
 multiplexing via httpx. Used by ``usp.fetcher.crawler.AsyncCrawler``.
 """
+
 from __future__ import annotations
 
 import gzip
@@ -101,7 +102,7 @@ class AsyncWebClient:
     def set_max_response_data_length(self, n: int | None) -> None:
         self._max_data_length = n
 
-    async def get(self, url: str) -> "_AsyncResponse":
+    async def get(self, url: str) -> _AsyncResponse:
         """Fetch URL. Returns :class:`_AsyncResponse` even on HTTP errors."""
         try:
             resp = await self._client.get(url, headers={"User-Agent": self.user_agent})
@@ -121,7 +122,7 @@ class AsyncWebClient:
     async def aclose(self) -> None:
         await self._client.aclose()
 
-    async def __aenter__(self) -> "AsyncWebClient":
+    async def __aenter__(self) -> AsyncWebClient:
         return self
 
     async def __aexit__(self, *exc: Any) -> None:
@@ -133,9 +134,7 @@ class _AsyncResponse:
 
     __slots__ = ("_url", "_status_code", "_data", "_headers", "_error")
 
-    def __init__(
-        self, *, url: str, status_code: int, data: bytes, headers: dict
-    ):
+    def __init__(self, *, url: str, status_code: int, data: bytes, headers: dict):
         self._url = url
         self._status_code = status_code
         self._data = data
@@ -143,7 +142,7 @@ class _AsyncResponse:
         self._error: Exception | None = None
 
     @classmethod
-    def from_error(cls, url: str, error: Exception) -> "_AsyncResponse":
+    def from_error(cls, url: str, error: Exception) -> _AsyncResponse:
         r = cls(url=url, status_code=0, data=b"", headers={})
         r._error = error
         return r

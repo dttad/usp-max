@@ -43,6 +43,23 @@ dependencies = [
     "requests (>=2.2.1,<3.0.0)",
 ]
 
+[project.optional-dependencies]
+# Async crawler: opt-in. Pulls httpx + anyio.
+async = [
+    "httpx[http2]>=0.27,<1.0",
+    "anyio>=4.0,<5.0",
+]
+# Faster parser: opt-in. Falls back to expat when missing.
+lxml = [
+    "lxml>=5.0,<7.0",
+]
+# Convenience bundle for the Phase 3+7a stack.
+perf = [
+    "httpx[http2]>=0.27,<1.0",
+    "anyio>=4.0,<5.0",
+    "lxml>=5.0,<7.0",
+]
+
 [project.urls]
 homepage = "https://ultimate-sitemap-parser.readthedocs.io/"
 documentation = "https://ultimate-sitemap-parser.readthedocs.io/"
@@ -68,8 +85,8 @@ docs = [
     "sphinx-autobuild>=2025.8.25",
     "sphinx-design>=0.6.1",
     "furo>=2025.9.25",
-    "sphinxext-opengraph>=0.13.0",
-    "sphinx-copybutton>=0.5.2",
+    "sphinxext-opengraph>=0.13.0,<0.14.0",
+    "sphinx-copybutton>=0.5.2,<0.6.0",
 ]
 
 [tool.uv.dependency-groups]

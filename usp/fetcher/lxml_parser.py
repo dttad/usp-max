@@ -4,13 +4,14 @@ Drops in for ``XMLSitemapParser`` when ``USP_USE_LXML=1``. Streams the
 XML via ``lxml.etree.iterparse`` and clears elements after processing
 to keep memory bounded.
 """
+
 from __future__ import annotations
 
 import io
 import logging
 import re
+from collections.abc import Iterator
 from decimal import Decimal
-from typing import Iterator
 
 from lxml import etree
 
@@ -19,7 +20,6 @@ from usp.helpers import (
     html_unescape_strip,
     parse_iso8601_date,
     parse_rfc2822_date,
-    ungzipped_response_content,
 )
 from usp.objects.page import (
     SITEMAP_PAGE_DEFAULT_PRIORITY,
@@ -29,12 +29,7 @@ from usp.objects.page import (
     SitemapPageChangeFrequency,
 )
 from usp.objects.sitemap import (
-    IndexRobotsTxtSitemap,
     IndexXMLSitemap,
-    InvalidSitemap,
-    PagesAtomSitemap,
-    PagesRSSSitemap,
-    PagesTextSitemap,
     PagesXMLSitemap,
 )
 
@@ -46,7 +41,7 @@ _NS_RE = re.compile(r"\{[^}]+\}")
 def _localname(tag: str) -> str:
     """Strip namespace URI from a Clark-notation tag."""
     m = _NS_RE.match(tag)
-    return tag[m.end():] if m else tag
+    return tag[m.end() :] if m else tag
 
 
 def _child(elem, name: str):
@@ -72,8 +67,13 @@ class _PageBuilder:
     """Accumulates per-<url> data; produces a SitemapPage when the URL closes."""
 
     __slots__ = (
-        "url", "last_modified", "priority", "change_frequency",
-        "images", "news", "_in_news",
+        "url",
+        "last_modified",
+        "priority",
+        "change_frequency",
+        "images",
+        "news",
+        "_in_news",
     )
 
     def __init__(self):
@@ -113,11 +113,17 @@ class _PageBuilder:
                 if _localname(img.tag) == "image" or True:
                     loc_elem = _child(img, "loc")
                     if loc_elem is not None and _text(loc_elem):
-                        self.images.append(SitemapImage(
-                            loc=html_unescape_strip(_text(loc_elem)),
-                            caption=html_unescape_strip(_text(_child(img, "caption"))) or None,
-                            title=html_unescape_strip(_text(_child(img, "title"))) or None,
-                        ))
+                        self.images.append(
+                            SitemapImage(
+                                loc=html_unescape_strip(_text(loc_elem)),
+                                caption=html_unescape_strip(
+                                    _text(_child(img, "caption"))
+                                )
+                                or None,
+                                title=html_unescape_strip(_text(_child(img, "title")))
+                                or None,
+                            )
+                        )
                     break
         elif local == "news":
             self._in_news = True
@@ -177,6 +183,7 @@ def _iterparse_bytes(content: bytes, content_type: str | None = None):
 def _stream_for(content: bytes) -> io.BytesIO:
     """Decode gzip if needed and return a BytesIO ready for iterparse."""
     import gzip
+
     if content[:2] == b"\x1f\x8b":
         try:
             text = gzip.decompress(content)
@@ -195,8 +202,16 @@ def parse_lxml_pages(content: bytes, url: str) -> list[SitemapPage]:
     """
     pages: list[SitemapPage] = []
     current: _PageBuilder | None = None
-    PAGE_TAGS = ("loc", "lastmod", "priority", "changefreq",
-                 "image", "news", "title", "publication_date")
+    PAGE_TAGS = (
+        "loc",
+        "lastmod",
+        "priority",
+        "changefreq",
+        "image",
+        "news",
+        "title",
+        "publication_date",
+    )
     try:
         for event, elem in etree.iterparse(
             _stream_for(content), events=("start", "end"), huge_tree=True
@@ -256,10 +271,12 @@ def parse_lxml_index(content: bytes, url: str) -> list[str]:
     return urls
 
 
-def parse_lxml_root(content: bytes, url: str) -> PagesXMLSitemap | IndexXMLSitemap | None:
+def parse_lxml_root(
+    content: bytes, url: str
+) -> PagesXMLSitemap | IndexXMLSitemap | None:
     """Dispatch on root element: urlset -> pages, sitemapindex -> index."""
     import gzip
-    raw = content
+
     if content[:2] == b"\x1f\x8b":
         try:
             text = gzip.decompress(content)
@@ -269,11 +286,10 @@ def parse_lxml_root(content: bytes, url: str) -> PagesXMLSitemap | IndexXMLSitem
         text = content
     # Look at the first non-whitespace to decide
     stripped = text.lstrip()
-    if stripped.startswith(b"<urlset") or stripped.startswith(b"<urlset"):
+    if stripped.startswith(b"<urlset"):
         pages = parse_lxml_pages(content, url)
         return PagesXMLSitemap(url=url, pages=pages)
     if stripped.startswith(b"<sitemapindex"):
-        urls = parse_lxml_index(content, url)
         return IndexXMLSitemap(url=url, sub_sitemaps=[])
     return None
 
@@ -281,6 +297,7 @@ def parse_lxml_root(content: bytes, url: str) -> PagesXMLSitemap | IndexXMLSitem
 def sitemap_root_kind(content: bytes) -> str | None:
     """Cheap sniff of root element name (urlset / sitemapindex / robots.txt)."""
     import gzip
+
     if content[:2] == b"\x1f\x8b":
         try:
             text = gzip.decompress(content)
