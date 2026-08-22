@@ -153,6 +153,62 @@ The image:
   Python 3.11/3.12/3.13/3.14t
 - ENTRYPOINT is `python -m usp.cli_main`; CMD defaults to `crawl --help`
 
+### Makefile — short wrappers around the docker CLI
+
+Every interaction with usp-max lives in the top-level `Makefile`, so
+the only command you ever type is `make`. The recipes that touch the
+host filesystem always run **inside** the same Docker image, which
+means you don't need zstd / tar / jq installed locally.
+
+```bash
+make help                        # show every recipe + variable
+
+make build                       # docker build -t usp-max:1.9.0 .
+
+# Crawl
+make crawl URL=https://play.google.com/ OUT=./pg
+make crawl URL=... OUT=./ex BATCH=50000 COMPRESS=zstd TAR=1 CONCURRENCY=32
+
+# One-flag output-format presets (recommended)
+make crawl-fast URL=...          # plain txt
+make crawl-gz URL=...            # *.txt.gz
+make crawl-zstd URL=...          # *.txt.zst
+make crawl-tar-gz URL=...        # *.txt.tar.gz
+make crawl-tar-zstd URL=...      # *.txt.tar.zst  (recommended)
+
+# Inspect the result — all via Docker, no local tools needed
+make ls OUT=./pg                 # list batch files (name, size, format)
+make wc OUT=./pg                 # count URLs per batch (streaming)
+make manifest OUT=./pg           # pretty-print manifest.json
+
+# Extract (also via Docker)
+make extract OUT=./pg TO=./pg-txt    # all batches -> flat txt dir
+make extract-one FILE=./pg/urls-00001.txt.tar.zst TO=./one  # single
+
+make clean                       # rm -rf OUT TO
+make clean-image                 # docker rmi usp-max:1.9.0
+```
+
+Every variable has a default shown by `make help`. The most common
+override is `IMAGE=usp-max:dev` during local development before you've
+tagged a release.
+
+Output directory must be writable by the container's `uspmax` user
+(uid 1000). On the host, `chmod 0777 ./out` works for shared hosts; in
+production mount a volume that the container can write to.
+
+A one-shot crawl + extract example (against the local replay server):
+
+```bash
+make build
+make IMAGE=usp-max:dev crawl-tar-zstd \
+    URL=http://127.0.0.1:8765/robots.txt \
+    OUT=./pg BATCH=5000 FANOUT_CAP=200
+make IMAGE=usp-max:dev extract OUT=./pg TO=./pg-txt
+ls ./pg-txt | head -3
+head -2 ./pg-txt/urls-00001.txt
+```
+
 ## Installation
 
 ### From source (recommended for the Docker build)
