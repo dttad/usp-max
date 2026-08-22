@@ -106,11 +106,52 @@ usp-max crawl https://play.google.com/ \
 Output:
 ```
 /data/urls/
-  urls-00001.txt.zst.tar   # 50 000 URLs, zstd-compressed, in a tar
-  urls-00002.txt.zst.tar
+  urls-00001.txt.tar.zst    # 50 000 URLs, zstd-compressed, in a tar
+  urls-00002.txt.tar.zst
   ...
-  manifest.json            # run summary
+  manifest.json             # run summary (urls_total, rate, ...)
 ```
+
+Extract:
+```bash
+zstd -d urls-00001.txt.tar.zst --stdout | tar -xOvf - urls-00001.txt
+```
+
+### Docker (recommended for production)
+
+The image bundles Python + Rust extension + all optional dependencies.
+Build and run:
+
+```bash
+# Build locally
+docker build -t usp-max:1.9.0 .
+
+# One-shot crawl with bind-mounted output directory
+docker run --rm \
+    --network host \                # so the container can reach the target
+    -v /data/urls:/home/uspmax/out \
+    usp-max:1.9.0 \
+    crawl https://play.google.com/ \
+        -o /home/uspmax/out \
+        --batch-size 50000 \
+        --compress zstd --tar \
+        --concurrency 32 \
+        --fanout-cap 500
+```
+
+Image properties (after `docker images usp-max:1.9.0`):
+
+```
+REPOSITORY  TAG    SIZE
+usp-max     1.9.0  ~250 MB     # Python 3.12-slim + httpx + lxml + usp_fast.so
+```
+
+The image:
+- runs as a non-root user (`uspmax`, uid 1000)
+- has `/install/bin/python` on PATH (everything is in `/install`)
+- ships `usp_fast` (PyO3+quick-xml) pre-compiled with abi3 so it works on
+  Python 3.11/3.12/3.13/3.14t
+- ENTRYPOINT is `python -m usp.cli_main`; CMD defaults to `crawl --help`
 
 ## Installation
 
