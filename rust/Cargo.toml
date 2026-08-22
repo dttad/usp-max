@@ -1,0 +1,19 @@
+[package]
+name = "usp_fast"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "usp_fast"
+crate-type = ["cdylib"]
+
+[dependencies]
+quick-xml = { version = "0.36", features = ["serialize"] }
+pyo3 = { version = "0.22", features = ["extension-module"] }
+flate2 = "1.0"
+
+[profile.release]
+lto = "fat"
+codegen-units = 1
+opt-level = 3
+strip = true

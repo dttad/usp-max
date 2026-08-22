@@ -1,18 +1,22 @@
-"""requests-based implementation of web client class."""
+"""Implementation of :mod:`usp.web_client.abstract_client` with Requests."""
 
+import logging
 from http import HTTPStatus
-from typing import Optional, Dict
 
 import requests
 
+from usp import __version__
+
 from .abstract_client import (
+    RETRYABLE_HTTP_STATUS_CODES,
     AbstractWebClient,
     AbstractWebClientResponse,
     AbstractWebClientSuccessResponse,
+    RequestWaiter,
     WebClientErrorResponse,
-    RETRYABLE_HTTP_STATUS_CODES,
 )
-from usp.__about__ import __version__
+
+log = logging.getLogger(__name__)
 
 
 class RequestsWebClientSuccessResponse(AbstractWebClientSuccessResponse):
@@ -21,11 +25,19 @@ class RequestsWebClientSuccessResponse(AbstractWebClientSuccessResponse):
     """
 
     __slots__ = [
-        '__requests_response',
-        '__max_response_data_length',
+        "__requests_response",
+        "__max_response_data_length",
     ]
 
-    def __init__(self, requests_response: requests.Response, max_response_data_length: Optional[int] = None):
+    def __init__(
+        self,
+        requests_response: requests.Response,
+        max_response_data_length: int | None = None,
+    ):
+        """
+        :param requests_response: Response data
+        :param max_response_data_length: Maximum data length, or ``None`` to not restrict.
+        """
         self.__requests_response = requests_response
         self.__max_response_data_length = max_response_data_length
 
@@ -35,34 +47,38 @@ class RequestsWebClientSuccessResponse(AbstractWebClientSuccessResponse):
     def status_message(self) -> str:
         message = self.__requests_response.reason
         if not message:
-            message = HTTPStatus(self.status_code(), None).phrase
+            message = HTTPStatus(self.status_code()).phrase
         return message
 
-    def header(self, case_insensitive_name: str) -> Optional[str]:
+    def header(self, case_insensitive_name: str) -> str | None:
         return self.__requests_response.headers.get(case_insensitive_name.lower(), None)
 
     def raw_data(self) -> bytes:
         if self.__max_response_data_length:
-            data = self.__requests_response.content[:self.__max_response_data_length]
+            data = self.__requests_response.content[: self.__max_response_data_length]
         else:
             data = self.__requests_response.content
 
         return data
 
+    def url(self) -> str:
+        return self.__requests_response.url
+
 
 class RequestsWebClientErrorResponse(WebClientErrorResponse):
     """
-    requests-based error response.
+    Error response from the Requests parser.
     """
+
     pass
 
 
 class RequestsWebClient(AbstractWebClient):
     """requests-based web client to be used by the sitemap fetcher."""
 
-    __USER_AGENT = 'ultimate_sitemap_parser/{}'.format(__version__)
+    __USER_AGENT = f"ultimate_sitemap_parser/{__version__}"
 
-    __HTTP_REQUEST_TIMEOUT = 60
+    __HTTP_REQUEST_TIMEOUT = (9.05, 60)
     """
     HTTP request timeout.
 
@@ -70,32 +86,50 @@ class RequestsWebClient(AbstractWebClient):
     """
 
     __slots__ = [
-        '__max_response_data_length',
-        '__timeout',
-        '__proxies',
+        "__max_response_data_length",
+        "__timeout",
+        "__proxies",
+        "__verify",
+        "__waiter",
     ]
 
-    def __init__(self, verify=True):
+    def __init__(
+        self,
+        verify=True,
+        wait: float | None = None,
+        random_wait: bool = False,
+        session: requests.Session | None = None,
+    ):
+        """
+        :param verify: whether certificates should be verified for HTTPS requests.
+        :param wait: time to wait between requests, in seconds.
+        :param random_wait: if true, wait time is multiplied by a random number between 0.5 and 1.5.
+        :param session: a custom session object to use, or None to create a new one.
+        """
         self.__max_response_data_length = None
         self.__timeout = self.__HTTP_REQUEST_TIMEOUT
         self.__proxies = {}
         self.__verify = verify
+        self.__waiter = RequestWaiter(wait, random_wait)
+        self.__session = session or requests.Session()
 
-    def set_timeout(self, timeout: int) -> None:
-        """Set HTTP request timeout."""
+    def set_timeout(self, timeout: float | tuple[float, float] | None) -> None:
+        """Set HTTP request timeout.
+
+        See also: `Requests timeout docs <https://requests.readthedocs.io/en/latest/user/advanced/#timeouts>`__
+
+        :param timeout: An integer to use as both the connect and read timeouts,
+            or a tuple to specify them individually, or None for no timeout
+        """
         # Used mostly for testing
         self.__timeout = timeout
 
-    def set_proxies(self, proxies: Dict[str, str]) -> None:
+    def set_proxies(self, proxies: dict[str, str]) -> None:
         """
-        Set proxies from dictionnary where:
+        Set a proxy for the request.
 
-        * keys are schemes, e.g. "http" or "https";
-        * values are "scheme://user:password@host:port/".
-        
-        For example:
-
-            proxies = {'http': 'http://user:pass@10.10.1.10:3128/'}
+        :param proxies: Proxy definition where the keys are schemes ("http" or "https") and values are the proxy address.
+            Example: ``{'http': 'http://user:pass@10.10.1.10:3128/'}, or an empty dict to disable proxy.``
         """
         # Used mostly for testing
         self.__proxies = proxies
@@ -104,12 +138,13 @@ class RequestsWebClient(AbstractWebClient):
         self.__max_response_data_length = max_response_data_length
 
     def get(self, url: str) -> AbstractWebClientResponse:
+        self.__waiter.wait()
         try:
-            response = requests.get(
+            response = self.__session.get(
                 url,
                 timeout=self.__timeout,
                 stream=True,
-                headers={'User-Agent': self.__USER_AGENT},
+                headers={"User-Agent": self.__USER_AGENT},
                 proxies=self.__proxies,
                 verify=self.__verify,
             )
@@ -122,17 +157,20 @@ class RequestsWebClient(AbstractWebClient):
             return RequestsWebClientErrorResponse(message=str(ex), retryable=False)
 
         else:
-
             if 200 <= response.status_code < 300:
                 return RequestsWebClientSuccessResponse(
                     requests_response=response,
                     max_response_data_length=self.__max_response_data_length,
                 )
             else:
-
-                message = '{} {}'.format(response.status_code, response.reason)
+                message = f"{response.status_code} {response.reason}"
+                log.debug(f"Response content: {response.text}")
 
                 if response.status_code in RETRYABLE_HTTP_STATUS_CODES:
-                    return RequestsWebClientErrorResponse(message=message, retryable=True)
+                    return RequestsWebClientErrorResponse(
+                        message=message, retryable=True
+                    )
                 else:
-                    return RequestsWebClientErrorResponse(message=message, retryable=False)
+                    return RequestsWebClientErrorResponse(
+                        message=message, retryable=False
+                    )

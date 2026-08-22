@@ -1,0 +1,31 @@
+{
+  "run_id": "64d15b05",
+  "git_sha": "ccc99d2",
+  "phase": "P7b-314t",
+  "mode": "replay-async",
+  "profile": "vn-google",
+  "fanout_cap": 50,
+  "concurrency": 16,
+  "homepage": "http://127.0.0.1:8765",
+  "wall_s": 7.876,
+  "urls_total": 19697,
+  "sitemaps_fetched": 53,
+  "urls_per_s": 2500.8,
+  "http": {
+    "requests": 103,
+    "s2xx": 53,
+    "s3xx": 0,
+    "s404": 50,
+    "s429": 0,
+    "s5xx": 0,
+    "bytes_wire": 21222179,
+    "bytes_uncompressed": 21222179,
+    "lat_p50_ms": 751.3,
+    "lat_p95_ms": 2585.8,
+    "lat_p99_ms": 2980.9
+  },
+  "mem": {
+    "peak_rss_mb": 107.0
+  },
+  "ts": "2026-08-21T10:35:57Z"
+}

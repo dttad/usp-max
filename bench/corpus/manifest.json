@@ -1,0 +1,1770 @@
+{
+  "version": 1,
+  "fetched_at": "2026-08-21T07:40:10Z",
+  "entries": [
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00000-of-82937.xml.gz",
+      "path": "fce96567f86c8819.bin",
+      "sha256": "b118bc9b1557f45c3dfc91eb7301c36d8e5a6183ff285c1bf50516b09ce56e5d",
+      "bytes": 204067,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00001-of-82937.xml.gz",
+      "path": "3d77a0dac0953297.bin",
+      "sha256": "b4b6f2b139105b7539eb8366263369d392d752dae8b1a6999080c74f62ae6660",
+      "bytes": 217718,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00002-of-82937.xml.gz",
+      "path": "3a2fb39b2bfa5cc9.bin",
+      "sha256": "eab9cac84a773b42628b3ea32605063e59f767c868693d53f4cb326383d13eaf",
+      "bytes": 218149,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00003-of-82937.xml.gz",
+      "path": "b8832f3d1f52ead2.bin",
+      "sha256": "beb8d64923d5d5ed827e047b27ea8c7a3c8cc7189b3c88e64b0953bbc5d5b62f",
+      "bytes": 235597,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00004-of-82937.xml.gz",
+      "path": "7fa4282ac2a336b0.bin",
+      "sha256": "0dab611fb9409aec4af77fd5786e3c3fcba359f3f9947063d00e578bab6f38a3",
+      "bytes": 231708,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00005-of-82937.xml.gz",
+      "path": "ed6422b5fe7323c3.bin",
+      "sha256": "043106683556513bd0fd563e0e6dba07f8ec8b8ac9df2f7f6374cc5f74c8fead",
+      "bytes": 218341,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00006-of-82937.xml.gz",
+      "path": "c144a2f5a3ecc55a.bin",
+      "sha256": "50c8d6a5695bc2a8e2e6cf265e6620c005a33b4dabd9370c2018074df64082c8",
+      "bytes": 242753,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00007-of-82937.xml.gz",
+      "path": "9dc1b9e2dff8eda8.bin",
+      "sha256": "ec087e6cf97d4eb2ea6e3823da568a26a135f568c36d16886de54a7147456619",
+      "bytes": 230055,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00008-of-82937.xml.gz",
+      "path": "082bbbe8c8c4d728.bin",
+      "sha256": "fc4ea512f8b329ef3686cdbbdcc08962153f7d61473f7a8911939d639bd6284f",
+      "bytes": 222935,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00009-of-82937.xml.gz",
+      "path": "dc0c74c0e01e6120.bin",
+      "sha256": "3aa1fc89716c4c6e5ad8e824bd92da3d29ae147130c9fa743863e7027003873a",
+      "bytes": 233848,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00010-of-82937.xml.gz",
+      "path": "0923ba2499709e13.bin",
+      "sha256": "31b765fa24e374fd5fe0fd0e1d806d9bda30b9aed55bd5f227b14a0ba0de79aa",
+      "bytes": 219462,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00011-of-82937.xml.gz",
+      "path": "53605c310be8fe2b.bin",
+      "sha256": "c40b9be75e70b5a37f11b934976c52ed409e7d8bd436256c41374bca0a90cfd2",
+      "bytes": 204426,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00012-of-82937.xml.gz",
+      "path": "2b823c4aab3099f9.bin",
+      "sha256": "e769853cf3ee5a85cfb0d7b5e1bf08cce66946ee934d4330606c0b4f024ffad0",
+      "bytes": 241824,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00013-of-82937.xml.gz",
+      "path": "5a6a940d361bd52b.bin",
+      "sha256": "92aaf76e69126c4a81b8f036e6bc8440eba5fb8e8187ba493a4bc69b7259893b",
+      "bytes": 219609,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00014-of-82937.xml.gz",
+      "path": "931a9a4f53437bf3.bin",
+      "sha256": "2b4e429df9b59f29d72f5334ac7b8ff7c2156fde956d7b23570553d4a3bb08a4",
+      "bytes": 229316,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00015-of-82937.xml.gz",
+      "path": "db5557bc0ef6f217.bin",
+      "sha256": "a3041c845efdb8642603c5290433afcfbe65d26fa1bc08f69cd79eb64a16703f",
+      "bytes": 235174,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00016-of-82937.xml.gz",
+      "path": "b31c829bc33a5f35.bin",
+      "sha256": "74134248342d188bee0708e1762c0204edec16e2d879485de357d61bbccf4eb9",
+      "bytes": 208099,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00017-of-82937.xml.gz",
+      "path": "f50b3bc4fcf72be8.bin",
+      "sha256": "97340ec15c63bef42f9b70540761062caedbdfe4381f5fa877ed6449ad5f1e42",
+      "bytes": 237445,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00018-of-82937.xml.gz",
+      "path": "b0f29833a7d4eb1a.bin",
+      "sha256": "55252304d8bdd9a41112b3e335471f4a99fd9db0c84e1f5ccbca5d9fdfb78944",
+      "bytes": 240501,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00019-of-82937.xml.gz",
+      "path": "418a90340e2c51be.bin",
+      "sha256": "f0bc55d6d2d9af7e2a8e0d6503158d2e4b04c1a5a10e231d556b73a570b13ff2",
+      "bytes": 222305,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00020-of-82937.xml.gz",
+      "path": "b788b61c6c7c712c.bin",
+      "sha256": "9823f3c51bf24e02c36c1cd082a02d4dcbc35aca7d6c6d4d1b05dc766add1e80",
+      "bytes": 232618,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00021-of-82937.xml.gz",
+      "path": "9c87c7b60bbb6778.bin",
+      "sha256": "4a6f4e1fa1e9f0f06e3aad0286bd79c3be78c15c4c5f153624917b243c7bb0b1",
+      "bytes": 227142,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00022-of-82937.xml.gz",
+      "path": "27a4bb9fbb2598d7.bin",
+      "sha256": "294f86f4f2d09e916acd9141c12090907fc32f476773bf941c8cf4abdef2a081",
+      "bytes": 234613,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00023-of-82937.xml.gz",
+      "path": "2465d666fbc6b41d.bin",
+      "sha256": "4ce9449fb1d649126330b25c39a814c0f32b5374c9ba9136aa7b8620a665890b",
+      "bytes": 205432,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00024-of-82937.xml.gz",
+      "path": "335b115f95ec901e.bin",
+      "sha256": "6bb204ae488a1f196f17238ea0d5465bce9bbb8d46bab8ab178a7a185b2080a4",
+      "bytes": 247445,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00025-of-82937.xml.gz",
+      "path": "c428a931183ed5c5.bin",
+      "sha256": "3b7df1e32e2fcf70fc027094ac7b79900d791c7216b3ade33c706b41e8967406",
+      "bytes": 227735,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00026-of-82937.xml.gz",
+      "path": "37c14b9a95a22606.bin",
+      "sha256": "93344c2090746296acfd01382d04be91cddeab1a640289f8413c10d35c107b86",
+      "bytes": 241674,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00027-of-82937.xml.gz",
+      "path": "5766546d893dff5e.bin",
+      "sha256": "ef10a95ce00c67fc002598c3446713ecde28bed4562185e1e73afd4457413ee4",
+      "bytes": 232688,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00028-of-82937.xml.gz",
+      "path": "b80ed51b1e0d94ec.bin",
+      "sha256": "85d93450192a6e1eef1767f899fe479478326053b8eaf16a25247132127e3c6a",
+      "bytes": 232097,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00029-of-82937.xml.gz",
+      "path": "4912fecb5144d81b.bin",
+      "sha256": "090bbd648802c7e714b0901161c608cb2375376e683405b28c710d60049bffcf",
+      "bytes": 234505,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00030-of-82937.xml.gz",
+      "path": "325bab393bc7b023.bin",
+      "sha256": "c803f33f6499dfa521c865c1df4cced76f12587bb7049cab066f164d39f05d22",
+      "bytes": 230035,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00031-of-82937.xml.gz",
+      "path": "671db68f3f94b53b.bin",
+      "sha256": "3a78f011c6bd183c7971a461d50bd9b6f8dc6e2dcbd8e1e31cb8aac037d9f81f",
+      "bytes": 228540,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00032-of-82937.xml.gz",
+      "path": "d8ce16fa4b8041a9.bin",
+      "sha256": "d34903dce9773e0288bd26daf7910bf65cbe7ffe6db1b77be45a3732a8ad39a7",
+      "bytes": 209879,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00033-of-82937.xml.gz",
+      "path": "f18e3903ad5f8935.bin",
+      "sha256": "b880388983735f210e637e11e4cd64022f9902dbf81ffe12aecbd1fd6ebcbfad",
+      "bytes": 224368,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00034-of-82937.xml.gz",
+      "path": "f029a21690dbc7d0.bin",
+      "sha256": "718363b4305985da0c56a4dc60ebac492e4f269fb70f6777f05a62d4663f83bb",
+      "bytes": 222454,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00035-of-82937.xml.gz",
+      "path": "1177c8203e21b539.bin",
+      "sha256": "caa06adca3023fcdc6c5575b991cc148a18290f4e1d7cef24cad8e6b88746fe2",
+      "bytes": 207290,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00036-of-82937.xml.gz",
+      "path": "686e8faf2abf968f.bin",
+      "sha256": "036e8a66197e7bb5acebb5b8da7552e529f65e1edfa89de88373f75de3c6728a",
+      "bytes": 213813,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00037-of-82937.xml.gz",
+      "path": "7fd3abd012196ead.bin",
+      "sha256": "0cf9fa2e1fbcaf6385c62ca1bfcfe4728ce469ecefff22663f1fa101b95fa9b4",
+      "bytes": 225572,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00038-of-82937.xml.gz",
+      "path": "87f5349c73c80151.bin",
+      "sha256": "7665da41890e1f3de9e0dc773938a5fc583e2a8f8d6badb342ed4775eff90280",
+      "bytes": 260384,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00039-of-82937.xml.gz",
+      "path": "9349f8ca23229f37.bin",
+      "sha256": "87a32ef7c3ace5379374b8dc8de55cbc414087ac0b316c932a833ad8fc7b5aed",
+      "bytes": 254369,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00040-of-82937.xml.gz",
+      "path": "df95f74bbdb8e10e.bin",
+      "sha256": "a40f108c373685cb38541d76e86ff9dfb96e9c7a5f9154e1b8f3e0dd6fdc1e6c",
+      "bytes": 227362,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00041-of-82937.xml.gz",
+      "path": "71e03898689e02d2.bin",
+      "sha256": "a2ad0ff9fce760860be3a3d77514117c803bad5808594ca13cd94922bb09cd0a",
+      "bytes": 205032,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00042-of-82937.xml.gz",
+      "path": "19ca08f905412346.bin",
+      "sha256": "28a2278527f836a6330cfe7c14f3c10a8d86efe5d8199d01d9c846fa1bbbb6f6",
+      "bytes": 216402,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00043-of-82937.xml.gz",
+      "path": "c8f539043b80525e.bin",
+      "sha256": "125b849bd2bb540201015e27cc96a352b85415968e62f78d5d3fe818a4da208d",
+      "bytes": 216383,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00044-of-82937.xml.gz",
+      "path": "a59e4a5adc2370a9.bin",
+      "sha256": "f8093ad4de993737ecce57cfb32e1c78bd155ab32460a2c09eeeffa52df83122",
+      "bytes": 199954,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00045-of-82937.xml.gz",
+      "path": "59ab4c28fab5c8cf.bin",
+      "sha256": "e6c99909629bdf5190c503182b8b6e890ae3068aa77da476e718b117bef4ffcb",
+      "bytes": 241687,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00046-of-82937.xml.gz",
+      "path": "ef5a13fc77e7e3d0.bin",
+      "sha256": "c07fa3d62c6b65ffcafccac63576ae9239a43e0b303627c462fcc823daf5cdbf",
+      "bytes": 230099,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00047-of-82937.xml.gz",
+      "path": "b9343edc1f7e5a97.bin",
+      "sha256": "03d6b282b3cd30381ba13f0d2435e840f09b83e21108b43adac1a1f61afdd1da",
+      "bytes": 212769,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00048-of-82937.xml.gz",
+      "path": "6f3d6632764fa895.bin",
+      "sha256": "ebec24b84a901ffe8071d6c66487dc9fe18ae3c201d39964f1e1be8133567488",
+      "bytes": 216242,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00049-of-82937.xml.gz",
+      "path": "e37b6c5b63720a18.bin",
+      "sha256": "8962e1080e27d5f0169ad80036afc7128a7483ccfb46573d975b0c9da045a33b",
+      "bytes": 197437,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00050-of-82937.xml.gz",
+      "path": "7f3a77cb842af682.bin",
+      "sha256": "e818e938f2a0228fad8cc85131ed5edd7f9760e254509ebf99d289420468ed4e",
+      "bytes": 231648,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00051-of-82937.xml.gz",
+      "path": "6a09d5353dd76d00.bin",
+      "sha256": "5f0022559c979002b673b49797b984473f4ac83cc04eade2aa4f22bfcd01cb18",
+      "bytes": 239331,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00052-of-82937.xml.gz",
+      "path": "a6e6fe77a1f8592a.bin",
+      "sha256": "8afc9efb6499629ffddb56ff3d3086873056c20887aa7af009b27a42689eb5e7",
+      "bytes": 254806,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00053-of-82937.xml.gz",
+      "path": "99dd58743068f8dd.bin",
+      "sha256": "e738460dccd180cbb39d70aeb48454eea72f4648fe0613afa5d8aff8112ab36d",
+      "bytes": 217454,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00054-of-82937.xml.gz",
+      "path": "8952f72228fbd567.bin",
+      "sha256": "0701b3a7cbbc4f8cb326351afdf9324b1703705719359e4e0a05a5acfbfa31ae",
+      "bytes": 245163,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00055-of-82937.xml.gz",
+      "path": "1b115005f0ba5b55.bin",
+      "sha256": "ba50a143d8adfd77d3f101831e6a2fa7ec6581cb3431a04cca9d7073a5076edd",
+      "bytes": 244001,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00056-of-82937.xml.gz",
+      "path": "ee9c8c7d91313595.bin",
+      "sha256": "7828990d6d56cd8a10a05d316385688af47e5d51ac09df829ad1b8ced18b8182",
+      "bytes": 238610,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00057-of-82937.xml.gz",
+      "path": "e4075af8d4dfa6a4.bin",
+      "sha256": "10dec1aa1b3011bfd98fc06ae7598cc5ad64e96c6eb6c8113075546c9baae3f9",
+      "bytes": 247370,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00058-of-82937.xml.gz",
+      "path": "b5f124ddc552e7a5.bin",
+      "sha256": "9b2928f128e2b35ed8594fa0a2ec9173ecbbf918b2f5eed8f3653bd836441c5c",
+      "bytes": 232389,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00059-of-82937.xml.gz",
+      "path": "82d81e0b51c85d76.bin",
+      "sha256": "1ecd3e8cfc5a7cfbbb44db0fc9e86566e63a16cddb177b5f909d673a7a710bae",
+      "bytes": 230608,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00060-of-82937.xml.gz",
+      "path": "4a111446d83b7510.bin",
+      "sha256": "64fc959cd1adcabfdebe350ca85f91e0ac8e14387cf455410adbd04323c71f07",
+      "bytes": 217689,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00061-of-82937.xml.gz",
+      "path": "5753b0a453831ce7.bin",
+      "sha256": "13023f5a5cddd9f28a83a089ebe8095ce1a8c5e3c93726c77d17b74185439227",
+      "bytes": 234409,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00062-of-82937.xml.gz",
+      "path": "d9e5504be1b937a5.bin",
+      "sha256": "e6e685e78aaed17c380c771c862c1efe405f3f440864d587d5f1d2a8fffc18ff",
+      "bytes": 231832,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00063-of-82937.xml.gz",
+      "path": "2e6477152946b896.bin",
+      "sha256": "163ad3d4272b7adda0abe1870d56b46697b6c87943de77d9bdb8848e0d9e14a8",
+      "bytes": 205468,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00064-of-82937.xml.gz",
+      "path": "74796819fe1725a0.bin",
+      "sha256": "07451d88d0bb66f694e6b873f9fb1d79492a92d60ea9b9eadb581e20a9628e2f",
+      "bytes": 214506,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00065-of-82937.xml.gz",
+      "path": "a3aab53dc4246b5a.bin",
+      "sha256": "144d56ad8464777e341a777a6d337296018c2db6aa4d804b40508981ae26788a",
+      "bytes": 221053,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00066-of-82937.xml.gz",
+      "path": "08eb58dd39b4e1d2.bin",
+      "sha256": "fd3805d845cc243e2a4fed13e626bec7e10793e20ec6a2f3044c57be22c960da",
+      "bytes": 220562,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00067-of-82937.xml.gz",
+      "path": "3d03e52c8102526d.bin",
+      "sha256": "3645db5a79178b4d4e7c307c5b0060ad27c17ca527aafe2c04bf26f861910579",
+      "bytes": 232392,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00068-of-82937.xml.gz",
+      "path": "acc1181f112cf066.bin",
+      "sha256": "41773ea13d3f429e74b1bb70c9da9823beefa51900a4bc48d253c78d4722e4f5",
+      "bytes": 220793,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00069-of-82937.xml.gz",
+      "path": "543f2c87bb91e4b9.bin",
+      "sha256": "76258c30c54f05787ee56082f4ff64881c1d17275842a02d1fc6e5dc2c141fbd",
+      "bytes": 209997,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00070-of-82937.xml.gz",
+      "path": "c5dcce08f534b69b.bin",
+      "sha256": "d5de2d2532da4b8bf44bb4f3881907845966da0a7841da1da4743053d6898ab8",
+      "bytes": 230319,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00071-of-82937.xml.gz",
+      "path": "df70c93b8a744619.bin",
+      "sha256": "9f1d156f3fed21ab21bdf67ea5fbaec53cba8a160644e2f3fdfe54edc321f68d",
+      "bytes": 222797,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00072-of-82937.xml.gz",
+      "path": "3bd0825b5c704cd9.bin",
+      "sha256": "468bd91ff41521e7b16ee99a244281b7f210e439d8e061e5eddef9f87e630cae",
+      "bytes": 204770,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00073-of-82937.xml.gz",
+      "path": "e05aaf6c7e0223ed.bin",
+      "sha256": "bf907f72fbaab1f58e1b9a1747b0e691e85246c6f0b6a705ad387d29bb17b4e2",
+      "bytes": 256005,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00074-of-82937.xml.gz",
+      "path": "1e7cb31b5e847499.bin",
+      "sha256": "7377b255ef6e28c62d8b0810299ca2d2855b130c3db323f941db2da1b8f032af",
+      "bytes": 218687,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00075-of-82937.xml.gz",
+      "path": "475e35f712097e53.bin",
+      "sha256": "48dd318701912c928c4a75dcf44da43eed43a5350e1f940d838c2d9dac8e8cec",
+      "bytes": 195406,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00076-of-82937.xml.gz",
+      "path": "1caac9fa19850bc0.bin",
+      "sha256": "7e8e66d0558735f1cdfe33039b0a58ca1052d67034692991fe4c113f7a05ffb7",
+      "bytes": 238177,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00077-of-82937.xml.gz",
+      "path": "7796b111061a86be.bin",
+      "sha256": "627b4b99e1e16585026f996d1c81a4139a2579ef508d4167d98897bf1ae4e483",
+      "bytes": 206608,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00078-of-82937.xml.gz",
+      "path": "4e4842b19cc90c6a.bin",
+      "sha256": "551b5e99664d5e909ae5ed1a6037b81d16c93695b0715b81721d988f6ffacb26",
+      "bytes": 214960,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00079-of-82937.xml.gz",
+      "path": "5ee1a11b23894f8e.bin",
+      "sha256": "b3451a5fafdc4012a49e175032b2d748e5b2812a9dfaad7f8c691acc7c6b4edf",
+      "bytes": 210831,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00080-of-82937.xml.gz",
+      "path": "b491e13673e87ee3.bin",
+      "sha256": "817cf1e2adf302d99adb8c6f89334ed28633985b7b19add3347aa3bca74c3572",
+      "bytes": 209937,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00081-of-82937.xml.gz",
+      "path": "74df170ab0e8c03d.bin",
+      "sha256": "830a6922691c19c27edb06a571be46fe33014b59b7b380705853891734c1f044",
+      "bytes": 223747,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00082-of-82937.xml.gz",
+      "path": "105c5922a0a96e53.bin",
+      "sha256": "a353c3d4dd7188b4ecfd9e19fdf0d387114a71f5201dc3ea8715cf8291ae5709",
+      "bytes": 233184,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00083-of-82937.xml.gz",
+      "path": "1822dca55c831f11.bin",
+      "sha256": "c84fb5ef222bfa852529229dbf480d92b7768d94a366f75f19695ef35fa3fc52",
+      "bytes": 204872,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00084-of-82937.xml.gz",
+      "path": "cf6b4dd5f7dc525d.bin",
+      "sha256": "a50c974ea53f5278217c37753ee46462851f926c07cd756f2830e83933db338c",
+      "bytes": 241343,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00085-of-82937.xml.gz",
+      "path": "6bb0342366b9d75c.bin",
+      "sha256": "a493e8818e9404a9cdb3a21a0bfa04e89f65ded03bfc6ca43b7d2c786130c9af",
+      "bytes": 188656,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00086-of-82937.xml.gz",
+      "path": "3923adb456289590.bin",
+      "sha256": "e3ae9d26a3ed9b7612c8fe6aa01e7c932824f81ca03586bf759f9e57f42d546b",
+      "bytes": 220011,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00087-of-82937.xml.gz",
+      "path": "b148341e4742a2bc.bin",
+      "sha256": "76762191cc6e0bfb36a25edce10bd3ed0823ef6107f97b8f1cfdb81e585e6347",
+      "bytes": 199823,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00088-of-82937.xml.gz",
+      "path": "3a8c20efaea83bbf.bin",
+      "sha256": "7ed0693e3e548d20c692bf7e048aed89edf09207386e491d8c82dd933fc8bb7f",
+      "bytes": 223550,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00089-of-82937.xml.gz",
+      "path": "b11534c970ba9928.bin",
+      "sha256": "e702d4d3979b59ea25f39aaabecddbd0f96ec04c71a76ffc3cf5ee59ee329ab6",
+      "bytes": 217922,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00090-of-82937.xml.gz",
+      "path": "025b18d440894e0f.bin",
+      "sha256": "bb93c6fc0186b28ae27b7dad80edc309c7e03ea21ad60d83c93db17f34a8069a",
+      "bytes": 240558,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00091-of-82937.xml.gz",
+      "path": "a733ff83cbac25c0.bin",
+      "sha256": "3ae808ab25524504e57740dc8d14615269a080bcd710078f8f20626e9f4ecc51",
+      "bytes": 198472,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00092-of-82937.xml.gz",
+      "path": "dd79e688e8e2b596.bin",
+      "sha256": "a46641dbeffa9b3935b3d9c89c94993cad10fe9e0946d6d1df2a319c15e6b518",
+      "bytes": 225454,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00093-of-82937.xml.gz",
+      "path": "b545ededdf94c8c6.bin",
+      "sha256": "2699f994452c38842a77ba8b43b93361bddc01eb373a058d2c8cb523f23e2dc9",
+      "bytes": 239211,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00094-of-82937.xml.gz",
+      "path": "d20823899208695a.bin",
+      "sha256": "9b6cd7cc41c52c69df76071c9ec7b2c17fd8598e31c5248a32b6c372541a70a6",
+      "bytes": 225641,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00095-of-82937.xml.gz",
+      "path": "fd42fb82f8c2a8b2.bin",
+      "sha256": "85d96cf8a6ab61303c702d19f82aa7c9a5f1b9305a80c5e0e835d55180d85bd3",
+      "bytes": 222847,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00096-of-82937.xml.gz",
+      "path": "a673297c9071d322.bin",
+      "sha256": "68219099fea1efd785ce616b4e1107ded3f2155dbbc049d7c9ee791a6a2a48c0",
+      "bytes": 255222,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00097-of-82937.xml.gz",
+      "path": "1d16c44d909b177e.bin",
+      "sha256": "149c638b63d7cc8d3100348fbc6855aa2a02069049e24d2cd5f7f242f26ee086",
+      "bytes": 223894,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00098-of-82937.xml.gz",
+      "path": "9815aa513a7b2790.bin",
+      "sha256": "730275b7cecf8c1ca32a93b892a3230f8acb264be28667b6515ee477d51dfbc4",
+      "bytes": 253645,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00099-of-82937.xml.gz",
+      "path": "0208d3d36be50925.bin",
+      "sha256": "b5923377c54cf96bae943a9f80038f9f5c74608b80f9195a3798ab3e27492e6c",
+      "bytes": 240915,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00100-of-82937.xml.gz",
+      "path": "c5394931d5c2d928.bin",
+      "sha256": "14331b980ddd8b405e18f224e2bd4ed30c443ac62986a19265da98ed397fa8d8",
+      "bytes": 223588,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00101-of-82937.xml.gz",
+      "path": "d2019fd7650d9773.bin",
+      "sha256": "01ba7c747f196c7e76e5688f10a30356f5ad5c2e5248c173442358917e9d2c6b",
+      "bytes": 231248,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00102-of-82937.xml.gz",
+      "path": "b2dfd885594b53cc.bin",
+      "sha256": "c8a88ed281843e04014aa0b8162fa7f214fff54fdb0ad14a0138537c95d86e9b",
+      "bytes": 233811,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00103-of-82937.xml.gz",
+      "path": "204e0794220725f2.bin",
+      "sha256": "fe88483d299b3de368c8df5d4afef16a91ab81753a844641f877927ba0a8d35f",
+      "bytes": 225792,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00104-of-82937.xml.gz",
+      "path": "2a491e05c82fe16c.bin",
+      "sha256": "c7d9949c90c6c29118de059adba8a02c3743fd80f8d6ae8d95650651adbdea55",
+      "bytes": 226214,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00105-of-82937.xml.gz",
+      "path": "aee5c2aa6bcb1498.bin",
+      "sha256": "3f00546c27c5a87df1e867a408bc176e7a0a0f200ce7329289973ff27fa0849e",
+      "bytes": 220009,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00106-of-82937.xml.gz",
+      "path": "291eb495d01c5483.bin",
+      "sha256": "ae3653873189a228fb8ec4c0535d92cdb0077a133358e4c00aa4b96211cb2ae3",
+      "bytes": 201034,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00107-of-82937.xml.gz",
+      "path": "e090ad031adfaf8a.bin",
+      "sha256": "e7f84e869dd86addff879af96769b8b6704ce02613ad9544840bdcf792a61928",
+      "bytes": 209784,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00108-of-82937.xml.gz",
+      "path": "cfc852941a579ee0.bin",
+      "sha256": "9e4c4a022d6c40d203e8bfe217ee1c4a0bf67c1316cf802e183cc3a0a9327edc",
+      "bytes": 204611,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00109-of-82937.xml.gz",
+      "path": "7be7f71f7e0634a5.bin",
+      "sha256": "29965019c8321cd1f80d3a2129fede1b0e5601fcbbcf72bf0b275f5637813c8f",
+      "bytes": 224447,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00110-of-82937.xml.gz",
+      "path": "969aad407f8ebef9.bin",
+      "sha256": "e9155002bc4f6e023489414129e388d3303f4d8982081a753b45c578105fa8b9",
+      "bytes": 243551,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00111-of-82937.xml.gz",
+      "path": "62ac866f3783f603.bin",
+      "sha256": "cc0392cfdb8dca40c81b88b6349283449f55c117beb2e8ce7c42f98e8e13bed2",
+      "bytes": 225828,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00112-of-82937.xml.gz",
+      "path": "47432f1ff2917b22.bin",
+      "sha256": "36e93a00d1107dc6449e8f9fc75c00d40361ae60a1b8426040f309b6bb405e27",
+      "bytes": 221362,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00113-of-82937.xml.gz",
+      "path": "a171d4e1854f4e25.bin",
+      "sha256": "e80a9200e7db21ead56d309d69b1c74f28dc588dfca22596c2049a65cbce9fd2",
+      "bytes": 256719,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00114-of-82937.xml.gz",
+      "path": "c1faeed30a6e7990.bin",
+      "sha256": "30aa44bf2133dc25547ff8d950b777d7f7a37605af0f252ae5299b5d99961490",
+      "bytes": 226477,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00115-of-82937.xml.gz",
+      "path": "411a5dd4f93c96e0.bin",
+      "sha256": "dd605bf2f1e3abf5a9f087ecdd265bae2c9b1b40b8a9cef8f875a41807edf6fe",
+      "bytes": 199891,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00116-of-82937.xml.gz",
+      "path": "ad4ecb6968ba3c2e.bin",
+      "sha256": "a32fbd4f4ade7cf3bed1d90e3feade4af78573d225e9978fe924ac40d742f145",
+      "bytes": 214971,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00117-of-82937.xml.gz",
+      "path": "2da9c4d3cfd56de4.bin",
+      "sha256": "acbe70c14cedab4bb340557c038606c51e38ab30fcf2ab16cbdfd0b1455a4aa9",
+      "bytes": 226533,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00118-of-82937.xml.gz",
+      "path": "4f274b2f65f11454.bin",
+      "sha256": "dd1644dd15ec304842387420fb64c91a07b61dbbac32a006d0a0472be5fd4dba",
+      "bytes": 218331,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00119-of-82937.xml.gz",
+      "path": "a790c848caaac8fb.bin",
+      "sha256": "a7ec66d7c7fa54f8e0328e2d5638f66059e078d530b112e92a822885466fd51b",
+      "bytes": 212192,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00120-of-82937.xml.gz",
+      "path": "665eeba321523e96.bin",
+      "sha256": "5fd45dc5825e456995e841d3e253fe2eabca97808b4bd500387ba209ccdef072",
+      "bytes": 234062,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00121-of-82937.xml.gz",
+      "path": "fef8ddcb3c58b9cd.bin",
+      "sha256": "5cedc751ca75af1f8b9f07e8e753a348aebb196fab5639db22b1dad38a8dc3eb",
+      "bytes": 214095,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00122-of-82937.xml.gz",
+      "path": "971884e62706975f.bin",
+      "sha256": "94da9f4c591e79514b10af173413d0dc3974bd1573e6ccea50374a7ce3689964",
+      "bytes": 223121,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00123-of-82937.xml.gz",
+      "path": "d7d9cdaa5ee37e61.bin",
+      "sha256": "5eb06914ff5c400f3b7bddf84c7375b4c12552698ef3bf32c252e08093a8a38e",
+      "bytes": 221743,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00124-of-82937.xml.gz",
+      "path": "ddb263d7d092434f.bin",
+      "sha256": "c54dd41de3c76fc6eca6e7812bb72bc8cd3e19314b8e6ed0559f6b2c077baa84",
+      "bytes": 233793,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00125-of-82937.xml.gz",
+      "path": "b10a54463212cb2f.bin",
+      "sha256": "edc70e350afd8e1103800fdfc8792ffbbc198e05605c3353c681f8043f40d793",
+      "bytes": 226833,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00126-of-82937.xml.gz",
+      "path": "77bb7b0d8a1adf05.bin",
+      "sha256": "01787406012ae58850aef93882a914c99e950e08370ffc26b4063aee22ba9fc4",
+      "bytes": 216064,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00127-of-82937.xml.gz",
+      "path": "3f0e95eaa6aac7bc.bin",
+      "sha256": "d81f71ec66e4b2e98b32a086e0cd41edf550c51ace1c2f49695b48faa0ab9030",
+      "bytes": 223950,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00128-of-82937.xml.gz",
+      "path": "bfd78dbdbbd8a0c9.bin",
+      "sha256": "2a499d3c912ba368dede0a080dd7bc80d031a283d57f6449970bf41da70bd46a",
+      "bytes": 230918,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00129-of-82937.xml.gz",
+      "path": "479f43ca78fbacb7.bin",
+      "sha256": "89e4bea227a518d82b401ab0a6f010737eb052501db56443db1f3ec51081facd",
+      "bytes": 252638,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00130-of-82937.xml.gz",
+      "path": "b20566650ca7f4ae.bin",
+      "sha256": "67d7c79520fe7e455a1b95fbfe2c4eb6c9ab0b2ea7700e51eb04148531a435f9",
+      "bytes": 212549,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00131-of-82937.xml.gz",
+      "path": "f723ef02e5e01cec.bin",
+      "sha256": "5bfe1c3ca98922ecb414ced55e1a70b807c45a791f9e5fe87a2a7df0856ba2c8",
+      "bytes": 222759,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00132-of-82937.xml.gz",
+      "path": "5ab31860b2dd4ee9.bin",
+      "sha256": "a2d2b0889a2dda14eb617164f806a8e26bb0689ee07bb2be78a57adad4d365e1",
+      "bytes": 191790,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00133-of-82937.xml.gz",
+      "path": "23d21d5ce09ece9d.bin",
+      "sha256": "54a9e75df3f785cce11955c953928901ce8cdb516f5ecd87287216fe0b339892",
+      "bytes": 204766,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00134-of-82937.xml.gz",
+      "path": "96e3a99a3b7c9425.bin",
+      "sha256": "8b8f5edf1fdfd774618d3f2a17e8a1685145fb6059055b687697df501350a487",
+      "bytes": 221760,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00135-of-82937.xml.gz",
+      "path": "a3acab22b7b01fab.bin",
+      "sha256": "2ab99f818ada5d4c146c9816afc997435340092ab0c4a8af82875f9198352d3e",
+      "bytes": 227495,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00136-of-82937.xml.gz",
+      "path": "26644a7ff3ace79c.bin",
+      "sha256": "6236dd583e83d8a378c644209013186b7e011d144928c0b832f93aa4b4a8ef7d",
+      "bytes": 221846,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00137-of-82937.xml.gz",
+      "path": "e19034c536e94b67.bin",
+      "sha256": "31b3712d2e45ae10d9b499aef15f9d77e2856763aa059d40a359468dc6bacea3",
+      "bytes": 228478,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00138-of-82937.xml.gz",
+      "path": "c79a12db837e7e63.bin",
+      "sha256": "0dbe121d939155debff105113c100ca8034ce4c7e38076577c5453f7723b8070",
+      "bytes": 256648,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00139-of-82937.xml.gz",
+      "path": "14cf87c379a869e2.bin",
+      "sha256": "0a7444d3550a794c0a7682c9068f73171c30a1607f1805af2bfd7283dcbe2270",
+      "bytes": 196527,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00140-of-82937.xml.gz",
+      "path": "74fda0ce0ca15b68.bin",
+      "sha256": "05af61811812e1ca2e4cb82a857b640bf67f09f4b07cecad8bab321403a6df31",
+      "bytes": 193699,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00141-of-82937.xml.gz",
+      "path": "f47b83c08c6883f7.bin",
+      "sha256": "5f99948076b3a72152fa4c80431191c076c7313acb58d9b402671986a863a209",
+      "bytes": 210811,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00142-of-82937.xml.gz",
+      "path": "d7fa03da4865a7de.bin",
+      "sha256": "a87167a68d5c2b050df00102e4df2bd4d8ddb1d9785b960a92459c8be25a529b",
+      "bytes": 204856,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00143-of-82937.xml.gz",
+      "path": "5948b52ee30e4636.bin",
+      "sha256": "aa2168eccb4e09023b2d567d842a0ee9a00e4ce7d4ac59b7f6f79a9fe8a55968",
+      "bytes": 244599,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00144-of-82937.xml.gz",
+      "path": "34eafe02a4111dd8.bin",
+      "sha256": "3cc2724f2c526b60b7d86eb7f8e84f63d846a0b7ab99ea61c70550cc5246d389",
+      "bytes": 233365,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00145-of-82937.xml.gz",
+      "path": "e051dea8b2ea6b7f.bin",
+      "sha256": "5d00b61f49daa5676154f812dfc0172a23d86a519d564ce290556ed2e8bc70dd",
+      "bytes": 201715,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00146-of-82937.xml.gz",
+      "path": "46ed6020726d5e78.bin",
+      "sha256": "49fdd2e359461556a86a259e98cf2312df080af79ada3ad0204f304db3ff5fce",
+      "bytes": 259131,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00147-of-82937.xml.gz",
+      "path": "5b17f0cc8d7ee44a.bin",
+      "sha256": "cffb8788aefe35470e7e3c7882483ccbd37fbb54818b2eca10acb1d648a9f90c",
+      "bytes": 218976,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00148-of-82937.xml.gz",
+      "path": "6adecc53df9e0dd5.bin",
+      "sha256": "107b15d19b9d7f50e4d1b2d9d30b12a95efab71945ac1a5e415557adb43c80e3",
+      "bytes": 238108,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00149-of-82937.xml.gz",
+      "path": "bc7cce888325562d.bin",
+      "sha256": "6b1d3bcb47a5d0394ba82a77f483678634ff5f9b9f0289b715428e76948a1ee1",
+      "bytes": 230705,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00150-of-82937.xml.gz",
+      "path": "df6cc225e30b49cf.bin",
+      "sha256": "b065ba932ec12ba9a1f82fb7655b585a5199068997b70522f5f0dfd0f4a88c2e",
+      "bytes": 237307,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00151-of-82937.xml.gz",
+      "path": "310ec8f298b5daf1.bin",
+      "sha256": "be9ef3c4f56a44ecee3904ff62c0abbb1f9530f584ccae037b38862ceaeeb249",
+      "bytes": 235883,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00152-of-82937.xml.gz",
+      "path": "f21619445a662949.bin",
+      "sha256": "88dcf7f818a61f231b341041bd7dc938f6b433ef74d5e579ee0fecf9b813bd11",
+      "bytes": 206035,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00153-of-82937.xml.gz",
+      "path": "36777cbb7ea0b94c.bin",
+      "sha256": "94801388223e6ac0aec2f4190c063860cc2381f5a7638daa0f39b73bb579b029",
+      "bytes": 240893,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00154-of-82937.xml.gz",
+      "path": "735c81c4f243bceb.bin",
+      "sha256": "9ca8e3ea6e67b146e64fb1cbd37b1fd5e4f96bac0f37cd32be8703096471d43a",
+      "bytes": 215066,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00155-of-82937.xml.gz",
+      "path": "55e0af76cf8628d5.bin",
+      "sha256": "34aa90d48cdfe47a9c5f56f5b67db0989a278427c447000b341bcbe74e1f5dd8",
+      "bytes": 246253,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00156-of-82937.xml.gz",
+      "path": "0028f8de2a1c1b2b.bin",
+      "sha256": "770eae116964178bfed4311e2a2d0caf291a5a279cf3be8ee8898e19366b9243",
+      "bytes": 255899,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00157-of-82937.xml.gz",
+      "path": "843bf98a2dcbdb83.bin",
+      "sha256": "150cc3966caa5a409dd782e4c1a249db132b4787d25c6ff8e7e98bab02c62bcc",
+      "bytes": 218804,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00158-of-82937.xml.gz",
+      "path": "504c4bc69210f339.bin",
+      "sha256": "83ea10e5cdfc021ded983a7bedfb824370b347b09b710fbb0d352164f9358519",
+      "bytes": 237488,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00159-of-82937.xml.gz",
+      "path": "99df181b7ebc7f47.bin",
+      "sha256": "2a854fb35bbc6b007497f9ab864f942f17b48b56d962b199920696c4932def3b",
+      "bytes": 223851,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00160-of-82937.xml.gz",
+      "path": "969419abe2165752.bin",
+      "sha256": "be1f44bc150984242ea955deaa8d1f3eb95fe29d7c56eacc96ed6bfde0e87d3e",
+      "bytes": 235400,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00161-of-82937.xml.gz",
+      "path": "a16c32b2556bbb61.bin",
+      "sha256": "6b03f0f2818c94de88a87b552be5e2eb11db8a81ffad73593997d0601128acde",
+      "bytes": 226933,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00162-of-82937.xml.gz",
+      "path": "7ea3fa15fb8d7940.bin",
+      "sha256": "2d50fd7531ea5531c04437927f775fe40c649dd9fa2dc750398798a45ddc2216",
+      "bytes": 240238,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00163-of-82937.xml.gz",
+      "path": "4db55e9a30b67406.bin",
+      "sha256": "788fee7e251c1e68b3d5352e8cb66db88c7e20ed97b14c7ecbf22cf3be6329d2",
+      "bytes": 233511,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00164-of-82937.xml.gz",
+      "path": "9a628ad595653b75.bin",
+      "sha256": "3624add157fcd4fb8b799a9fb81f717999b3e254a20adb3a14690a51be372fd4",
+      "bytes": 215680,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00165-of-82937.xml.gz",
+      "path": "a4ad5c123964ad4d.bin",
+      "sha256": "dff57e83326dbe362e6445b88e23d4d9c6bdd5dd9293e7af12407d9c082750f9",
+      "bytes": 229138,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00166-of-82937.xml.gz",
+      "path": "46814de87972c823.bin",
+      "sha256": "45eb8459847109594e5ca55cf4034a52f1fee93fbd9763f21451fc1633468e41",
+      "bytes": 208236,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00167-of-82937.xml.gz",
+      "path": "523d077a80907abf.bin",
+      "sha256": "09aad13ae6e01e0a59c4719ddbbc1b18fe333cd4030ab1dce762d97ff8a50e95",
+      "bytes": 218361,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00168-of-82937.xml.gz",
+      "path": "ecc148c9e08d1bba.bin",
+      "sha256": "e29fc82b3759f5a8ba9a62a4f463dbae430e5e2d36568e3b50c1029db7439f0b",
+      "bytes": 248454,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00169-of-82937.xml.gz",
+      "path": "bd7a6d792cb96e24.bin",
+      "sha256": "dfd2ca530bb394e44f1752ef1390d4bfba906ab6b46c5dbe9c5121e2afdd684f",
+      "bytes": 215968,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00170-of-82937.xml.gz",
+      "path": "c37a8d12d587da8e.bin",
+      "sha256": "6ebbd084afc6faf9160ee99ad9dba3952a945f73fa7f6134efcd67cb4bfb747f",
+      "bytes": 230524,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00171-of-82937.xml.gz",
+      "path": "51ab140419adab37.bin",
+      "sha256": "8566e9e16f44ecf35b65c972b102af5be97cf65d45c3aec5d3ed75a378f94578",
+      "bytes": 221963,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00172-of-82937.xml.gz",
+      "path": "05cc98bdd6726a19.bin",
+      "sha256": "03723340cd700e167040fe8538cb57c39aee656aaff6b0fc1501dfb2fa8db4c9",
+      "bytes": 209388,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00173-of-82937.xml.gz",
+      "path": "71b317e92bbe869a.bin",
+      "sha256": "b76ce926805434395f9176ad4fbcf6a15faacf9f967576b6c749aeced714a526",
+      "bytes": 220035,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00174-of-82937.xml.gz",
+      "path": "52c027f4b0edea1f.bin",
+      "sha256": "b4c36edb9401cbc8733283eeefaf5b67917dc78aa649eeaceda7e0bc80e73484",
+      "bytes": 225205,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00175-of-82937.xml.gz",
+      "path": "b8a92223fe62f5a7.bin",
+      "sha256": "4dc4068134f43fec5ec2bf2678700cf691342c01e60fdcfe543132ce02b49625",
+      "bytes": 227865,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00176-of-82937.xml.gz",
+      "path": "750707cdc7390081.bin",
+      "sha256": "48bbfd8b6a8083907e7935813a35173e8c0cb2ab6758b35db9afbf87d85b623a",
+      "bytes": 220354,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00177-of-82937.xml.gz",
+      "path": "34bada0f3bde263b.bin",
+      "sha256": "1a5ca876d19a83fa5c6e1a4d12a164b0126570c7221b5f678a03e551a6a27af2",
+      "bytes": 250776,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00178-of-82937.xml.gz",
+      "path": "b74e7203ef002b49.bin",
+      "sha256": "580451b65a7baabdec639fae273f936c9eb36d6eb1df458395c58bd02b4d8d82",
+      "bytes": 228468,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00179-of-82937.xml.gz",
+      "path": "7c237448dbf4abe6.bin",
+      "sha256": "1d69d51d56ae41d4908e52e36a8d1607d2cee4231cb38770c2f5dee22ea27823",
+      "bytes": 230799,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00180-of-82937.xml.gz",
+      "path": "90f766c1bcfb9edc.bin",
+      "sha256": "0dbd29b91aa506185c7a7276fae05620e384a396b420da29f6ec93b8a6c3a7bd",
+      "bytes": 235528,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00181-of-82937.xml.gz",
+      "path": "0511a21aa81528c3.bin",
+      "sha256": "8189ddff48dc132f60802f3171d70cb88707a985e37769a2f21dc51034fcd5e1",
+      "bytes": 217637,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00182-of-82937.xml.gz",
+      "path": "5e3a0d0caa69cd29.bin",
+      "sha256": "6d9d5f11e77cf01c04926cc1ef01ab1b6de93b5a61ee183989cef986cf1a7098",
+      "bytes": 213648,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00183-of-82937.xml.gz",
+      "path": "c5b96655eca49778.bin",
+      "sha256": "6fd6546eab2928fdb17e8a6a3175e7dc2a6ee5c3a2e9256ff8cb17da11bfc546",
+      "bytes": 223978,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00184-of-82937.xml.gz",
+      "path": "ce144c1f897723de.bin",
+      "sha256": "beba99e7f60808929977262f9067f79812979858c04e3c03a04c880d0c16e7d9",
+      "bytes": 207183,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00185-of-82937.xml.gz",
+      "path": "021db6d04fba57b7.bin",
+      "sha256": "2cd200d02f4eb68db3f1b8063fffed1bee1d9c4b2375c370b17b14b2f3b93168",
+      "bytes": 225359,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00186-of-82937.xml.gz",
+      "path": "381347c9b09dcbd0.bin",
+      "sha256": "624e7f9400e1b22d9801c98203ea159f68a494f1e4105a67cdbda5303f4494f5",
+      "bytes": 215613,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00187-of-82937.xml.gz",
+      "path": "6875f160617175fe.bin",
+      "sha256": "3c1a98aaa4d97fae32a46d8585ffd990a5a7051cb8e04c4b56601c0421a31d04",
+      "bytes": 222785,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00188-of-82937.xml.gz",
+      "path": "4e0c62a0a77d2447.bin",
+      "sha256": "80c5ff03256660fc64631e231891a0df28bdfd67178b6da8dea497b240eecc99",
+      "bytes": 250138,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00189-of-82937.xml.gz",
+      "path": "d377acfde4087587.bin",
+      "sha256": "65b9a2318fb2fac8ff303c74c94044fd25f9740ea026d8c5a1af4e1893740ed8",
+      "bytes": 234729,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00190-of-82937.xml.gz",
+      "path": "4d66ceded78bbd62.bin",
+      "sha256": "d058e6edb1fd761a008d61af3be4d45ba9659e4bfce4b6da593eacab373c3857",
+      "bytes": 239920,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00191-of-82937.xml.gz",
+      "path": "3d14f2ad64305961.bin",
+      "sha256": "db575e3f4490472c46f2549ec154946dc579ba07f27670092d899ddcc8ac683d",
+      "bytes": 212906,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00192-of-82937.xml.gz",
+      "path": "62be7f57438af98f.bin",
+      "sha256": "e5a9ba0f3237098b8b9298c70865eed78cbdb68414518ed63e39ceb067bbc6fa",
+      "bytes": 208664,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00193-of-82937.xml.gz",
+      "path": "182900dcbec26b2f.bin",
+      "sha256": "a51f5eee60a6b51a4564207c34353126693404e0efbf4ee8006de93fd7429c0c",
+      "bytes": 224221,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00194-of-82937.xml.gz",
+      "path": "b84b8b0f8d4a6317.bin",
+      "sha256": "e170c17349619a6345bb22ba317bc0c6f573168b7692d6225fb445b7ea3b0c2c",
+      "bytes": 221440,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00195-of-82937.xml.gz",
+      "path": "5e3beffdc14129fa.bin",
+      "sha256": "4d36d2ebc6144321ece8ba3a8440e671ba2ad7315281d4e5d44cffb72f15d076",
+      "bytes": 210629,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00196-of-82937.xml.gz",
+      "path": "fd3560acc6ad36bb.bin",
+      "sha256": "c5ba9ba50529f0650a41cf400dfdbbf0c98f39afc4116fc33e3404197e8a2350",
+      "bytes": 207432,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00197-of-82937.xml.gz",
+      "path": "2aa0f70d7b7d64bf.bin",
+      "sha256": "cb2dea91170d227052a6ee1659214c6426ba86df48ed6434aa406433ee196194",
+      "bytes": 200140,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00198-of-82937.xml.gz",
+      "path": "b8ee1974e04e5c95.bin",
+      "sha256": "068d089e5eb88f20b1501f70b9411481c8d45e67af7f7083efe191551dee6ac6",
+      "bytes": 228869,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00199-of-82937.xml.gz",
+      "path": "b38878d1741f5a1a.bin",
+      "sha256": "110e14c7c543c376c447cee1ea681a0e77d72c9848d7a5095d55bec82e74f57e",
+      "bytes": 213437,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00200-of-82937.xml.gz",
+      "path": "e21497b5202533db.bin",
+      "sha256": "0c9dd786ddd3a265150ffb83ecfe8b176fd0859929d92efd68e6a2bf1ccff089",
+      "bytes": 216218,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00201-of-82937.xml.gz",
+      "path": "568f1ecf9c43c57e.bin",
+      "sha256": "75ebfae6e0db00155dcb06f280c7e3c70b8a7ebd31244380b5faac7b0035cc3e",
+      "bytes": 233896,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00202-of-82937.xml.gz",
+      "path": "eda372bbfb4fb4f2.bin",
+      "sha256": "297bb73586f96e43ce42ca4f1ea2da71f5f6682ae901a08238dc7b3c880b0c92",
+      "bytes": 227769,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00203-of-82937.xml.gz",
+      "path": "b5a104d570b68c37.bin",
+      "sha256": "e920fee3250e5f7f3fa050d2c8c1210603af4e4d27edb13b24714116e42d2a08",
+      "bytes": 218790,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00204-of-82937.xml.gz",
+      "path": "2c906f0840e55f2d.bin",
+      "sha256": "c9786b6785c906012f141bf70ff5bf64e637c79f74862bdf06e9aac225816cc3",
+      "bytes": 240389,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00205-of-82937.xml.gz",
+      "path": "7a78092d8259db6e.bin",
+      "sha256": "5c0c295e13a830466f3fad75405e31168f2f007b3ffbb66b0010ecc186cea003",
+      "bytes": 217049,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00206-of-82937.xml.gz",
+      "path": "a402e3cf0057f345.bin",
+      "sha256": "742128b4480a8d9ed8a4a778fa55bcda50a6771088fc9a80f316d789b5e0c461",
+      "bytes": 238636,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00207-of-82937.xml.gz",
+      "path": "d6d9a4a2eb49138b.bin",
+      "sha256": "41c297f52b1ab7516f485a8c67cac6df16a08774c0e69a9a322217339c59dc03",
+      "bytes": 234674,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00208-of-82937.xml.gz",
+      "path": "3dae51ff492a2ad0.bin",
+      "sha256": "51543a5269eca21a441ecaf0b5e5f6732fa9866ac8cd890aa58cf7eaa23f5869",
+      "bytes": 246600,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00209-of-82937.xml.gz",
+      "path": "db1e46bb169de225.bin",
+      "sha256": "1df9a5059559ec33ca7a854394efd217fbb6484d566658e1a6e5a37bfc251965",
+      "bytes": 260084,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00210-of-82937.xml.gz",
+      "path": "04f62a7286d3f967.bin",
+      "sha256": "8154122c23e379806f66df3eac96c9bc0c8667e495208d50bb766b40bc683ed2",
+      "bytes": 230109,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00211-of-82937.xml.gz",
+      "path": "9b99f074d232a682.bin",
+      "sha256": "f0401394d08ee9fbcab8d89d03e5d9188d17e780372320cbd5d09fb0d4c74b9e",
+      "bytes": 240942,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00212-of-82937.xml.gz",
+      "path": "af3d39be35b88170.bin",
+      "sha256": "4d5952e17409d2dd749e9617bd40721fd47f36c8801905d307ca42f47a6b956e",
+      "bytes": 200032,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00213-of-82937.xml.gz",
+      "path": "acc9bb8665cd0ced.bin",
+      "sha256": "a2323378fcad8dd42d46e9eb96fef23b18d43cedf1f4c45169885500ff25f297",
+      "bytes": 233890,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00214-of-82937.xml.gz",
+      "path": "0ed2b63d630936a3.bin",
+      "sha256": "a8e5d0c5b0a55d8a472c7907765c53d4af1a29d99134e6944f04398478654957",
+      "bytes": 228455,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00215-of-82937.xml.gz",
+      "path": "107955cb30aa9610.bin",
+      "sha256": "a8dced6bf01c37f1291e9e96ba630ea0a375282b0d5ba916a82fd124d27e8abb",
+      "bytes": 237052,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00216-of-82937.xml.gz",
+      "path": "a0ade05ea56c2bf5.bin",
+      "sha256": "49db1e0f89fa0fcce55367db123cf574417c4c94f137448867b62ffbf47b629a",
+      "bytes": 217595,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00217-of-82937.xml.gz",
+      "path": "92f6597bebc547fa.bin",
+      "sha256": "53b1c7832d632700591e01b80fd9d08114a8b4f029a3ff096cc517992aaef4f6",
+      "bytes": 224005,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00218-of-82937.xml.gz",
+      "path": "5165c69c6ae735c3.bin",
+      "sha256": "b3d7bf5cae726c1fb18adfdb6bdd7e6db1827892dd27941ac3a4dd161bad0f2b",
+      "bytes": 210611,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00219-of-82937.xml.gz",
+      "path": "697f3137e9a7d8d9.bin",
+      "sha256": "b1f1450013288d350fedc5d9c1797422d1622046d40809ceffaa1748141bd365",
+      "bytes": 234948,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00220-of-82937.xml.gz",
+      "path": "dd80c19d3f7cfafb.bin",
+      "sha256": "737d4b1c837fcc7164348c42eabfe5a0a388a388c6c66fafac56735caa6d5ae1",
+      "bytes": 205042,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00221-of-82937.xml.gz",
+      "path": "082d792c1fb5becb.bin",
+      "sha256": "252a4ee8165e11f41b57d6044750633a05af65cc246e0cbaeb2512b11f0b8f1d",
+      "bytes": 202031,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00222-of-82937.xml.gz",
+      "path": "96cb6986820a22f6.bin",
+      "sha256": "32d0f154e27d98fb5b665f71d51bf14793e62838c13b952c17a4c06eb7ca63fc",
+      "bytes": 231439,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00223-of-82937.xml.gz",
+      "path": "f9ad181abc36c154.bin",
+      "sha256": "d816ad6eef022b4fe5cc2aa7cd1e62ed5430d76231f253ed55acb75a0df9b4a1",
+      "bytes": 218233,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00224-of-82937.xml.gz",
+      "path": "43170975fb7b2606.bin",
+      "sha256": "8e6045539527f758e923411738ea1fab863e0fbb4b0171a45bfd7b88cf22046b",
+      "bytes": 225466,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00225-of-82937.xml.gz",
+      "path": "031b47056c203e22.bin",
+      "sha256": "ecbd77437e341531458dbf122385107c8eeebe5eb0aff6699f57aafed98b6021",
+      "bytes": 220504,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00226-of-82937.xml.gz",
+      "path": "2570612491fe2db1.bin",
+      "sha256": "7fd783a681c47b006312c53b7eeea6b6a8f83b944eeef28e99b87d843a6c6644",
+      "bytes": 210038,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00227-of-82937.xml.gz",
+      "path": "decee92b41e5c914.bin",
+      "sha256": "c7d944b369391c93426bd0841eaa0050aac1152f47c87e663ec4ab01ccc9d66b",
+      "bytes": 245234,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00228-of-82937.xml.gz",
+      "path": "1506ac93d6fb682a.bin",
+      "sha256": "7f65fdf82000c8a9c6fe4d913f39523abff18ec8d2143e81eee347e801bbaba4",
+      "bytes": 230961,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00229-of-82937.xml.gz",
+      "path": "9baca7b67e996be9.bin",
+      "sha256": "4b7a48e306ae1e729f5f99ba56db926b004e4bc0b57cd9057fed3d18e8daada9",
+      "bytes": 236277,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00230-of-82937.xml.gz",
+      "path": "709c2ff7fbd92098.bin",
+      "sha256": "27c773aefd32919be57642f809ba7c39715d1af9caeddc9a13751e268267bb47",
+      "bytes": 231076,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00231-of-82937.xml.gz",
+      "path": "9c447435965f8aab.bin",
+      "sha256": "cd57fd70451f9a6c855835e1743c96f9844faab1f15f2663f55271e56e40b9ac",
+      "bytes": 217630,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00232-of-82937.xml.gz",
+      "path": "5cf001cc5a0335ab.bin",
+      "sha256": "c398978343238dad7cf5410fcefcd8441369d108c4ab1521ec1916654560343d",
+      "bytes": 211259,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00233-of-82937.xml.gz",
+      "path": "5cfd9266eaecca0e.bin",
+      "sha256": "1e4c3a19c8bb012d68a554aaa6e0cc811ef782dd39f59c2b29705323b88ac91f",
+      "bytes": 219848,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00234-of-82937.xml.gz",
+      "path": "835acc0de0ac6ba8.bin",
+      "sha256": "07a4e435a7cdbabf392be2f2cf0a58b4edf8a530166e0d022d8a7c799fc66445",
+      "bytes": 258613,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00235-of-82937.xml.gz",
+      "path": "0e9bd2424a5476cc.bin",
+      "sha256": "4641dcccd5a0e90cd1d18cbe83626ca5e9d550339aaff67487098e9c9502f8b8",
+      "bytes": 236431,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00236-of-82937.xml.gz",
+      "path": "78c3d028a7fad41a.bin",
+      "sha256": "b6ec6549aa2834a47606f6a78ee601ddac9111d8a9aab27c075576c464094f7d",
+      "bytes": 235346,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00237-of-82937.xml.gz",
+      "path": "9f7ba69e13f5bf0b.bin",
+      "sha256": "c05c85494a14e2db44789dcdddb54efb0b90efe1d2b8105a25ef18ece82f94a8",
+      "bytes": 246847,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00238-of-82937.xml.gz",
+      "path": "b2f4086736d0d2d7.bin",
+      "sha256": "20c8348848f9ddf8258e5426c236a9d773437ee11e4b1f233ca42066afcc8c9d",
+      "bytes": 232529,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00239-of-82937.xml.gz",
+      "path": "cacc21fa097e76ed.bin",
+      "sha256": "f606a681cacaf777e71c5c9bfb8239445b78eec69816b7e53e1b7e4f27e1eb78",
+      "bytes": 234853,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00240-of-82937.xml.gz",
+      "path": "6f6886a16f7c9458.bin",
+      "sha256": "94f82e21c522cb4ab422f5631d0fb773482570edda399bb96a655f2c6eda51d2",
+      "bytes": 189680,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00241-of-82937.xml.gz",
+      "path": "911f4777843a7ce3.bin",
+      "sha256": "eff890172f395d5c37779113f4adaa71945a010b52cf0556a5846fd0e8df479f",
+      "bytes": 212645,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00242-of-82937.xml.gz",
+      "path": "464c7da02081ee4f.bin",
+      "sha256": "03bf6a62935a9ad928fbdfc3f4c3e4a78dabbd5f24d10d0eb62ee14b3ffe660a",
+      "bytes": 223562,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00243-of-82937.xml.gz",
+      "path": "c7ac56f611401ea6.bin",
+      "sha256": "6ab06c173e49e1083fac228523df6222365ff2f765827744ae935ea44d2f2a51",
+      "bytes": 228102,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00244-of-82937.xml.gz",
+      "path": "3ae4f2c35e2c5d19.bin",
+      "sha256": "cd9be823058688c53489be9349891d43ba372b24c988af2abfaf7944a4a2f1de",
+      "bytes": 243277,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00245-of-82937.xml.gz",
+      "path": "7840844f2b13c4b5.bin",
+      "sha256": "f0baa06ad371d1327895f6794707bb476f4437c944b509c9e5b936379756b917",
+      "bytes": 225932,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00246-of-82937.xml.gz",
+      "path": "725251dedf4461ed.bin",
+      "sha256": "1fc4ff9cb1b29da2b4383617777fc440688333514cb01d48b745c7062b22b989",
+      "bytes": 221588,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00247-of-82937.xml.gz",
+      "path": "16107393bae60e17.bin",
+      "sha256": "9f354e5c392aff3b867579e6ffab16a0ba3e90f2b8336f69359fec84937b8e08",
+      "bytes": 222807,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00248-of-82937.xml.gz",
+      "path": "750d8c747ea1ab05.bin",
+      "sha256": "bcf3b9219536b45fda51ca578f50f9eb54fcb50a789597eb6e7b63c36678e6bc",
+      "bytes": 218288,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/play_sitemaps_2026-08-09_1786334522-00249-of-82937.xml.gz",
+      "path": "df43e30b6b8dc4b0.bin",
+      "sha256": "e9ca667f93f14a12dd05a8a8652a599fa9a0f60a8a8a132e0df3c2f3f2426126",
+      "bytes": 219526,
+      "is_gzip": true
+    },
+    {
+      "url": "https://play.google.com/sitemaps/sitemaps-index-0.xml",
+      "path": "index-0.xml",
+      "sha256": "05c09c24d9b25d38e39c8485ac6712e0732b5435ba51bc7987d02d4bb01c3d3e",
+      "bytes": 6000119,
+      "role": "index"
+    },
+    {
+      "url": "https://play.google.com/sitemaps/sitemaps-index-1.xml",
+      "path": "index-1.xml",
+      "sha256": "5595f848842038257bc10738ba46892c7d37aa6b4c8587d83adf8c3e17fe757e",
+      "bytes": 3952559,
+      "role": "index"
+    }
+  ]
+}

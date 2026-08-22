@@ -1,0 +1,31 @@
+{
+  "run_id": "3f6b3911",
+  "git_sha": "c9af077",
+  "phase": "P7c-rust",
+  "mode": "replay-async",
+  "profile": "hostile",
+  "fanout_cap": 50,
+  "concurrency": 16,
+  "homepage": "http://127.0.0.1:8765",
+  "wall_s": 2.905,
+  "urls_total": 18886,
+  "sitemaps_fetched": 51,
+  "urls_per_s": 6500.9,
+  "http": {
+    "requests": 103,
+    "s2xx": 51,
+    "s3xx": 0,
+    "s404": 48,
+    "s429": 4,
+    "s5xx": 0,
+    "bytes_wire": 20738668,
+    "bytes_uncompressed": 20738668,
+    "lat_p50_ms": 295.8,
+    "lat_p95_ms": 1202.2,
+    "lat_p99_ms": 1321.1
+  },
+  "mem": {
+    "peak_rss_mb": 73.2
+  },
+  "ts": "2026-08-21T12:28:18Z"
+}
