@@ -89,6 +89,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Copy the prebuilt install prefix from stage 1.
 COPY --from=builder /install /install
 
+# Optional: copy the prebuilt React SPA from stage 1b (if you built it).
+# Run with `--build-arg USP_BUILD_WEB=1` and an extra web/ build context
+# (see Makefile) to populate /home/uspmax/web.
+ARG USP_BUILD_WEB=0
+COPY web/ /home/uspmax/web/
+
 # Best practice: run as a non-root user. Give uspmax ownership of
 # /install so its pip-installed packages are usable, and create the
 # default output dir owned by uspmax.
@@ -106,8 +112,8 @@ RUN mkdir -p /home/uspmax/out
 VOLUME ["/home/uspmax/out"]
 WORKDIR /home/uspmax/out
 
-# The CLI entrypoint. The `crawl` subcommand is required; everything else
-# (URL, --batch-size, --compress, etc.) is forwarded to `usp-max crawl`.
+# The CLI entrypoint. Subcommands: `crawl` (default; one-shot crawl),
+# `serve` (web UI), `ls`/`wc`/`manifest`/`extract` (inspect past output).
 ENTRYPOINT ["python", "-m", "usp.cli_main"]
 CMD ["crawl", "--help"]
 

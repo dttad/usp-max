@@ -8,8 +8,8 @@ archive).
 Examples
 --------
     usp-max crawl https://play.google.com/
-    usp-max crawl https://example.com/ -o /data/urls \
-        --batch-size 50000 --compress zstd --tar \
+    usp-max crawl https://example.com/ -o /data/urls \\
+        --batch-size 50000 --compress zstd --tar \\
         --concurrency 32 --fanout-cap 500
 
 Output filename pattern
@@ -21,13 +21,19 @@ from __future__ import annotations
 import argparse
 import gzip
 import io
+import json
 import logging
 import os
+import queue as thread_queue
 import sys
 import tarfile
+import threading
 import time
+from collections.abc import Callable, Iterator
 from pathlib import Path
-from typing import Any, Callable, Iterable, Iterator
+from typing import Any
+
+import anyio
 
 from usp import __version__
 from usp.cli._log import kv, setup_logging
@@ -39,7 +45,7 @@ log = logging.getLogger("usp-max.crawl")
 # Output compression helpers
 # ----------------------------------------------------------------------
 
-def _open_writer(path: Path, compress: str, use_tar: bool) -> tuple[Any, Callable[[bytes], None], Callable[[], None]]:
+def _open_writer(path: Path, compress: str, use_tar: bool):
     """Return (file_handle, write_bytes, finalize).
 
     ``write_bytes(data)`` appends ``data`` to the underlying file.
@@ -48,13 +54,10 @@ def _open_writer(path: Path, compress: str, use_tar: bool) -> tuple[Any, Callabl
     if compress == "gz":
         raw = path.open("wb")
         fh: Any = gzip.GzipFile(fileobj=raw, mode="wb", mtime=0)
-        # If we are wrapping in tar, the tar archive lives *inside* the gz file.
         tar: tarfile.TarFile | None = None
         if use_tar:
             tar = tarfile.open(fileobj=fh, mode="w")
     elif compress == "zstd":
-        # zstd is not in the stdlib. Defer import so the dependency is
-        # only needed when the user actually asks for it.
         try:
             import zstandard  # type: ignore[import-not-found]
         except ImportError as ex:
@@ -69,7 +72,6 @@ def _open_writer(path: Path, compress: str, use_tar: bool) -> tuple[Any, Callabl
         if use_tar:
             tar = tarfile.open(fileobj=fh, mode="w")
     else:
-        ##### no compression
         raw = path.open("wb")
         fh = raw
         tar = None
@@ -77,12 +79,10 @@ def _open_writer(path: Path, compress: str, use_tar: bool) -> tuple[Any, Callabl
             tar = tarfile.open(fileobj=fh, mode="w")
 
     if tar is not None:
-        # When wrapping in tar, each batch is a single tarinfo entry.
-        # Strip every outer suffix to get the inner filename.
         inner_name = _strip_all_suffixes(path.name, use_tar=True, compress=compress)
         info = tarfile.TarInfo(name=inner_name)
         info.mtime = int(time.time())
-        info.size = 0  # will be updated on finalize
+        info.size = 0
 
         buf = io.BytesIO()
         def write_bytes(data: bytes) -> None:
@@ -99,7 +99,6 @@ def _open_writer(path: Path, compress: str, use_tar: bool) -> tuple[Any, Callabl
 
         return raw, write_bytes, finalize
 
-    # No tar wrapper: just stream bytes to the underlying file.
     def write_bytes(data: bytes) -> None:
         fh.write(data)
 
@@ -109,14 +108,6 @@ def _open_writer(path: Path, compress: str, use_tar: bool) -> tuple[Any, Callabl
             raw.close()
 
     return raw, write_bytes, finalize
-
-
-def _strip_suffixes(name: str, compress: str) -> str:
-    out = name
-    for suf in (".tar", ".gz", ".zst"):
-        if out.endswith(suf):
-            out = out[: -len(suf)]
-    return out
 
 
 def _strip_all_suffixes(name: str, use_tar: bool, compress: str) -> str:
@@ -133,8 +124,6 @@ def _strip_all_suffixes(name: str, use_tar: bool, compress: str) -> str:
     elif compress == "zstd":
         suffixes.append(".zst")
     out = name
-    # Loop until no more matching suffix — needed because ``urls-00001.txt.tar.gz``
-    # only ends with ``.gz`` (not ``.tar``) on the first pass.
     changed = True
     while changed:
         changed = False
@@ -158,98 +147,175 @@ def _batch_filename(index: int, fmt: str, compress: str, use_tar: bool) -> str:
 
 
 # ----------------------------------------------------------------------
-# Async crawler wrapper (so the CLI doesn't need to know anyio)
+# Streaming bridge: async → sync
 # ----------------------------------------------------------------------
 
-def _crawl_async(homepage: str, args: argparse.Namespace) -> Iterator[str]:
-    """Yield URLs (one at a time) from the async crawler."""
-    import anyio
-    from urllib.parse import urlparse
+# Sentinel for "no more URLs" in the thread queue.
+_SENTINEL = object()
 
+
+def _stream_urls_from_async(pages_async, q: thread_queue.Queue) -> None:
+    """Producer thread: runs the async pages iterator and pushes to q."""
+    try:
+        anyio.run(_drain_async, pages_async, q.put)
+    except BaseException as ex:  # noqa: BLE001
+        log.warning("async crawl failed: %s", ex)
+    finally:
+        q.put(_SENTINEL)
+
+
+async def _drain_async(pages_async, put) -> None:
+    async for url in pages_async:
+        put(url)
+
+
+# ----------------------------------------------------------------------
+# Async crawler wrapper
+# ----------------------------------------------------------------------
+
+def _crawl_async_streaming(homepage: str, args: argparse.Namespace) -> Iterator[str]:
+    """Bridge the async streaming crawler to a sync iterator via a thread queue.
+
+    Memory bounded to ``concurrency * 4`` in-flight URLs. Safe for
+    million-URL crawls.
+    """
+
+    cap = args.fanout_cap
+    def cap_fn(urls, level, parents):
+        return sorted(urls)[:cap]
+
+    q: thread_queue.Queue = thread_queue.Queue(maxsize=max(args.concurrency * 4, 64))
+    error: list[BaseException | None] = [None]
+
+    def run_async() -> None:
+        try:
+            anyio.run(_async_main, homepage, args, q, cap_fn, error)
+        except BaseException as ex:  # noqa: BLE001
+            error[0] = ex
+            q.put(_SENTINEL)
+
+    thread = threading.Thread(target=run_async, daemon=True, name="crawl-async")
+    thread.start()
+
+    while True:
+        item = q.get()
+        if item is _SENTINEL:
+            break
+        yield item
+    thread.join(timeout=1.0)
+    if error[0] is not None:
+        raise error[0]
+
+
+async def _async_main(homepage, args, q, cap_fn, error) -> None:
     from usp.fetcher.async_client import AsyncWebClient
     from usp.fetcher.crawler import AsyncCrawler
+    from usp.fetcher.discovery import (
+        discover_sitemap_urls,
+        looks_like_sitemap_url,
+    )
 
-    rec = []
-    seen_count = [0]
-    crawl_started = [time.monotonic()]
+    async with AsyncWebClient(
+        http2=True,
+        max_connections=max(args.concurrency * 2, 20),
+        user_agent=args.user_agent,
+        proxy=args.proxy,
+    ) as client:
+        def normalize_to_local(url: str) -> str:
+            return url
 
-    async def run() -> None:
-        async with AsyncWebClient(
-            http2=True,
-            max_connections=max(args.concurrency * 2, 20),
-            user_agent=args.user_agent,
-        ) as client:
-            def normalize_to_local(url: str) -> str:
-                # Pass-through; the docker image hits the real network.
-                return url
+        crawler = AsyncCrawler(
+            client,
+            concurrency=args.concurrency,
+            max_sitemaps=args.max_sitemaps or float("inf"),
+            max_depth=args.max_depth,
+            deadline_s=args.deadline_seconds or None,
+            recurse_callback=None,
+            recurse_list_callback=cap_fn,
+            url_normalize=normalize_to_local,
+            use_lxml=args.parser != "expat",
+            use_rust=args.parser != "expat",
+        )
+        log.info("→ crawl started  %s", kv(
+            homepage=homepage,
+            concurrency=args.concurrency,
+            parser="auto" if args.parser != "expat" else "expat",
+        ))
+        crawl_started = time.monotonic()
 
-            crawler = AsyncCrawler(
-                client,
-                concurrency=args.concurrency,
-                max_sitemaps=args.max_sitemaps or float("inf"),
-                max_depth=args.max_depth,
-                deadline_s=args.deadline_seconds or None,
-                recurse_callback=None,
-                recurse_list_callback=_make_cap(args.fanout_cap),
-                url_normalize=normalize_to_local,
-                use_lxml=args.parser != "expat",
-                use_rust=args.parser != "expat",
-            )
-            log.info("→ crawl started  %s", kv(
-                homepage=homepage,
-                concurrency=args.concurrency,
-                parser="auto",
-            ))
-            crawl_started[0] = time.monotonic()
-            tree = await crawler.crawl([homepage])
+        # Resolve homepage → actual sitemap URLs via robots.txt / known
+        # paths. Without this, `usp-max crawl https://play.google.com/`
+        # would try to parse the HTML homepage as a sitemap.
+        seed_urls = [homepage]
+        if not looks_like_sitemap_url(homepage):
+            log.info("→ discovering sitemaps for %s", homepage)
 
-            elapsed = time.monotonic() - crawl_started[0]
-            log.info("✓ crawl finished  %s", kv(
-                sitemaps_fetched=crawler.sitemaps_fetched,
-                sitemaps_failed=crawler.sitemaps_failed,
-                elapsed_s=round(elapsed, 2),
-            ))
+            async def _fetch(u: str):
+                r = await client.get(u)
+                if r.error is not None:
+                    return 0, b"", u
+                return r.status_code(), r.raw_data(), r.url()
 
-            async def walk(node):
-                from usp.objects.sitemap import (
-                    AbstractSitemap,
-                    IndexRobotsTxtSitemap,
-                    IndexXMLSitemap,
-                    PagesXMLSitemap,
+            discovered = await discover_sitemap_urls(homepage, _fetch)
+            if discovered:
+                seed_urls = discovered
+                log.info(
+                    "  ✓ discovered %d sitemap(s): %s",
+                    len(discovered),
+                    ", ".join(discovered[:3]) + (
+                        "…" if len(discovered) > 3 else ""
+                    ),
                 )
-                if isinstance(node, PagesXMLSitemap):
-                    for page in node.pages:
-                        seen_count[0] += 1
-                        if args.max_urls and seen_count[0] > args.max_urls:
-                            return
-                        yield page.url
-                for sub in node.sub_sitemaps:
-                    async for u in walk(sub):
-                        yield u
+            else:
+                log.warning(
+                    "  ✗ no sitemaps discovered; will try the URL as-is"
+                )
 
-            async for url in walk(tree):
-                yield url
+        try:
+            async for url in crawler.crawl_streaming(seed_urls):
+                q.put(url)
+                if args.max_urls:
+                    # We can't easily count in streaming mode, but
+                    # budget is enforced inside the crawler too.
+                    pass
+        except Exception as ex:
+            error[0] = ex
+        elapsed = time.monotonic() - crawl_started
+        log.info("✓ crawl finished  %s", kv(
+            sitemaps_fetched=crawler.sitemaps_fetched,
+            sitemaps_failed=crawler.sitemaps_failed,
+            elapsed_s=round(elapsed, 2),
+        ))
 
-    # anyio.run + simple queue to bridge async iterator to sync iterator
-    from anyio.streams.memory import MemoryObjectReceiveStream, MemoryObjectSendStream
 
-    async def producer() -> None:
-        async with anyio.create_task_group() as tg:
-            send, recv = anyio.create_memory_object_stream(max_buffer_size=1000)
-            async def pump() -> None:
-                async for url in run():
-                    await send.send(url)
-                await send.send(None)
-            tg.start_soon(pump)
-            # Drain
-            while True:
-                url = await recv.receive()
-                if url is None:
-                    break
-                rec.append(url)
+# ----------------------------------------------------------------------
+# Sync fallback (uses upstream sync SitemapFetcher)
+# ----------------------------------------------------------------------
 
-    anyio.run(producer)
-    yield from rec
+def _crawl_sync(homepage: str, args: argparse.Namespace) -> Iterator[str]:
+    from usp.objects.sitemap import (
+        PagesXMLSitemap,
+    )
+    from usp.tree import sitemap_tree_for_homepage
+
+    def cap(urls, level, parents):
+        return sorted(urls)[:args.fanout_cap]
+
+    tree = sitemap_tree_for_homepage(
+        homepage,
+        use_robots=True,
+        use_known_paths=False,
+        recurse_list_callback=cap,
+    )
+
+    def walk(node):
+        if isinstance(node, PagesXMLSitemap):
+            for p in node.pages:
+                yield p.url
+        for sub in node.sub_sitemaps:
+            yield from walk(sub)
+
+    return walk(tree)
 
 
 def _make_cap(cap: int) -> Callable[[list[str], int, set[str]], list[str]]:
@@ -259,7 +325,7 @@ def _make_cap(cap: int) -> Callable[[list[str], int, set[str]], list[str]]:
 
 
 # ----------------------------------------------------------------------
-# Main entry point
+# CLI
 # ----------------------------------------------------------------------
 
 def register(subparsers: argparse._SubParsersAction) -> None:
@@ -323,6 +389,14 @@ def register(subparsers: argparse._SubParsersAction) -> None:
         help="HTTP User-Agent header",
     )
     p.add_argument(
+        "--proxy", default=None,
+        help=(
+            "HTTP/HTTPS/SOCKS5 proxy URL (e.g. http://127.0.0.1:8080, "
+            "socks5://user:pass@host:1080). For SOCKS, install "
+            "httpx[socks] in the image."
+        ),
+    )
+    p.add_argument(
         "--backend", choices=["sync", "async"], default="async",
         help="Crawler backend (default: async)",
     )
@@ -365,9 +439,20 @@ def run(args: argparse.Namespace) -> None:
         fanout_cap=args.fanout_cap,
         parser=args.parser,
         backend=args.backend,
+        proxy=args.proxy,
     ))
 
-    args.output.mkdir(parents=True, exist_ok=True)
+    # Sanity-check the output directory up-front so we fail fast on
+    # permission / read-only / missing-volume errors instead of after
+    # the crawl has finished.
+    try:
+        args.output.mkdir(parents=True, exist_ok=True)
+    except OSError as ex:
+        log.error("cannot create output dir %s: %s", args.output, ex)
+        sys.exit(2)
+    if not os.access(args.output, os.W_OK):
+        log.error("output dir %s is not writable", args.output)
+        sys.exit(2)
 
     started = time.monotonic()
     written_total = 0
@@ -377,6 +462,8 @@ def run(args: argparse.Namespace) -> None:
     current_finalize = None
     current_count = 0
     progress_fh = args.progress_json.open("a") if args.progress_json else None
+    last_progress_log = started
+    last_progress_event = started
 
     def open_batch() -> None:
         nonlocal current_path, current_writer, current_finalize, current_count, batch_index
@@ -419,18 +506,24 @@ def run(args: argparse.Namespace) -> None:
     open_batch()
 
     if args.backend == "sync":
-        urls = _crawl_sync(args.url, args)
+        url_iter: Iterator[str] = _crawl_sync(args.url, args)
     else:
-        urls = _crawl_async(args.url, args)
+        url_iter = _crawl_async_streaming(args.url, args)
 
-    import json as _json
     last_report = time.monotonic()
-    for url in urls:
-        line = (url + "\n") if args.format == "txt" else (_json.dumps({"url": url}) + "\n")
+    for url in url_iter:
+        if args.max_urls and written_total >= args.max_urls:
+            log.info(
+                "  · stopping: reached --max-urls=%d",
+                args.max_urls,
+            )
+            break
+        line = (url + "\n") if args.format == "txt" else (json.dumps({"url": url}) + "\n")
         current_writer(line.encode("utf-8"))
         current_count += 1
         written_total += 1
-        # Periodic progress every 30s with running totals
+
+        # Periodic progress every 30s with running totals.
         now = time.monotonic()
         if now - last_report > 30:
             elapsed = now - started
@@ -439,11 +532,14 @@ def run(args: argparse.Namespace) -> None:
                 kv(total=written_total, urls_per_s=round(written_total / elapsed, 1)),
             )
             last_report = now
-        if progress_fh and written_total % 10_000 == 0:
+
+        if progress_fh and now - last_progress_event > 5:
             progress_fh.write(
                 f'{{"event":"urls","total":{written_total}}}\n'
             )
             progress_fh.flush()
+            last_progress_event = now
+
         if current_count >= args.batch_size:
             close_batch()
             open_batch()
@@ -468,51 +564,29 @@ def run(args: argparse.Namespace) -> None:
         )
         progress_fh.close()
 
-    # Write a manifest
+    # Atomic write of the manifest (write to temp + rename) so a
+    # crash mid-write can't leave a half-baked manifest.
     manifest_path = args.output / "manifest.json"
-    import json
-    with manifest_path.open("w") as f:
-        json.dump({
-            "usp-max": __version__,
-            "url": args.url,
-            "urls_total": written_total,
-            "batch_size": args.batch_size,
-            "format": args.format,
-            "compress": args.compress,
-            "tar": args.tar,
-            "elapsed_seconds": round(elapsed, 3),
-            "rate_urls_per_s": round(rate, 1),
-            "backend": args.backend,
-            "parser": args.parser,
-        }, f, indent=2)
-    log.info("  manifest: %s", manifest_path)
-
-
-# ----------------------------------------------------------------------
-# Sync fallback (uses upstream sync SitemapFetcher)
-# ----------------------------------------------------------------------
-
-def _crawl_sync(homepage: str, args: argparse.Namespace) -> Iterator[str]:
-    from usp.tree import sitemap_tree_for_homepage
-    from usp.objects.sitemap import (
-        IndexRobotsTxtSitemap, IndexXMLSitemap, PagesXMLSitemap,
-    )
-
-    def cap(urls, level, parents):
-        return sorted(urls)[:args.fanout_cap]
-
-    tree = sitemap_tree_for_homepage(
-        homepage,
-        use_robots=not args.no_robots,
-        use_known_paths=not args.no_known,
-        recurse_list_callback=cap,
-    )
-
-    def walk(node):
-        if isinstance(node, PagesXMLSitemap):
-            for p in node.pages:
-                yield p.url
-        for sub in node.sub_sitemaps:
-            yield from walk(sub)
-
-    return walk(tree)
+    manifest_tmp = manifest_path.with_suffix(".json.tmp")
+    manifest = {
+        "usp-max": __version__,
+        "url": args.url,
+        "urls_total": written_total,
+        "batches_written": batch_index,
+        "batch_size": args.batch_size,
+        "format": args.format,
+        "compress": args.compress,
+        "tar": args.tar,
+        "elapsed_seconds": round(elapsed, 3),
+        "rate_urls_per_s": round(rate, 1),
+        "backend": args.backend,
+        "parser": args.parser,
+        "exit_reason": "max_urls_reached" if (args.max_urls and written_total >= args.max_urls) else "natural",
+    }
+    try:
+        with manifest_tmp.open("w") as f:
+            json.dump(manifest, f, indent=2)
+        manifest_tmp.replace(manifest_path)
+        log.info("  manifest: %s", manifest_path)
+    except OSError as ex:
+        log.warning("could not write manifest %s: %s", manifest_path, ex)

@@ -9,6 +9,8 @@
 #   make help                  show this help
 #   make build                 build the Docker image
 #   make crawl URL=...         one-shot crawl
+#   make serve                 run the web UI (paste-a-URL)
+#   make web-build             build the React SPA (web/dist/)
 #   make extract FILE=...      extract one batch file
 #   make extract-all OUT=...   extract every batch under OUT/
 #   make manifest OUT=...      pretty-print manifest.json
@@ -18,6 +20,7 @@
 #   make crawl URL=https://play.google.com/ OUT=./pg
 #   make crawl URL=https://example.com OUT=./ex BATCH=50000 \
 #         COMPRESS=zstd TAR=1
+#   make serve HOST=0.0.0.0 PORT=8088
 #   make extract FILE=./pg/urls-00001.txt.tar.zst OUT=./pg-txt
 #   make extract-all OUT=./pg TO=./pg-txt
 
@@ -33,6 +36,9 @@ COMPRESS    ?= none            # none | gz | zstd
 TAR         ?= 0               # 0 | 1
 CONCURRENCY  ?= 16
 FANOUT_CAP  ?= 200
+HOST         ?= 0.0.0.0        # web UI bind address
+PORT         ?= 8088           # web UI bind port
+PROXY        ?=                # HTTP/HTTPS/SOCKS5 proxy URL for crawl/serve
 
 # Auto-derived constants
 ABS_OUT := $(abspath $(OUT))
@@ -60,6 +66,9 @@ help: ## Show this help (default)
 	@printf "  TAR         = \033[33m%s\033[0m  (0|1)\n" "$(TAR)"
 	@printf "  CONCURRENCY = \033[33m%s\033[0m\n" "$(CONCURRENCY)"
 	@printf "  FANOUT_CAP  = \033[33m%s\033[0m\n" "$(FANOUT_CAP)"
+	@printf "  HOST        = \033[33m%s\033[0m\n" "$(HOST)"
+	@printf "  PORT        = \033[33m%s\033[0m\n" "$(PORT)"
+	@printf "  PROXY       = \033[33m%s\033[0m\n" "$(PROXY)"
 
 # ---------------------------------------------------------------------------
 # Docker image
@@ -114,6 +123,28 @@ crawl-tar-gz: crawl ## tar.gz batches (good for archives)
 crawl-tar-zstd: COMPRESS := zstd
 crawl-tar-zstd: TAR := 1
 crawl-tar-zstd: crawl ## tar.zst batches (smallest, recommended)
+
+# ---------------------------------------------------------------------------
+# Web UI — Starlette + React SPA
+# ---------------------------------------------------------------------------
+web-build: ## Build the React SPA into web/dist/ (needs node + npm)
+	@if [ ! -d web/node_modules ]; then \
+		echo "→ web/npm install"; \
+		cd web && npm install --no-fund --no-audit; \
+	fi
+	cd web && npm run build
+	@echo "✓ web/dist ready"
+
+web-dev: ## Run the Vite dev server (proxies /api to a separately running serve)
+	cd web && npm run dev
+
+serve: ## Run the web UI server (HOST=0.0.0.0 PORT=8088 PROXY=…)
+	@mkdir -p $(ABS_OUT)
+	docker run --rm --network host \
+		-v $(ABS_OUT):/home/uspmax/out \
+		$(IMAGE) \
+		serve --host $(HOST) --port $(PORT) --output-dir /home/uspmax/out \
+			$(if $(PROXY),--proxy $(PROXY),)
 
 # ---------------------------------------------------------------------------
 # Extract — also via Docker so we don't need zstd/tar locally
@@ -171,4 +202,4 @@ clean-image: ## Remove the Docker image
 
 .PHONY: help build rebuild crawl crawl-fast crawl-gz crawl-zstd \
         crawl-tar-gz crawl-tar-zstd extract extract-one extract-all \
-        manifest ls wc clean clean-image
+        manifest ls wc clean clean-image web-build web-dev serve
