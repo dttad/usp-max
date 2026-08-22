@@ -1,0 +1,29 @@
+# Build artifacts
+**/target/
+**/*.pyc
+**/__pycache__/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local venvs
+.venv/
+.venv-*/
+
+# Local corpus data (huge)
+bench/corpus/
+bench/profiles/
+
+# Local benchmark outputs
+bench/results/P*-*.json
+bench/results/_*.json
+
+# Editor / OS noise
+.idea/
+.vscode/
+.DS_Store
+
+# Secrets / config
+.env
+.envrc
