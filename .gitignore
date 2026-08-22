@@ -12,3 +12,11 @@ __pycache__/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+# Make test artifacts
+make-test-out/
+make-test-txt/
+
+# Stray root-level python files
+/inspect.py
+/_crawl.py
+/_crawl_async.py
