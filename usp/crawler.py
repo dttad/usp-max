@@ -191,88 +191,41 @@ class AsyncCrawler:
         self._started_at = time.monotonic()
         norm_roots = [self._url_normalize(u) for u in root_urls]
 
-        # ``url_queue`` carries page URLs from workers to the consumer.
-        # ``fetch_queue`` carries sitemap URLs that workers pop.
-        # When the worker pool is "all idle" (every worker hit the
-        # idle-wait timeout and no new items were added), we know
-        # nothing more is coming and the consumer can finish.
-        url_queue: asyncio.Queue[str] = asyncio.Queue()
         fetch_queue: asyncio.Queue[tuple[str, set[str], int] | None] = asyncio.Queue()
+        url_queue: asyncio.Queue[str | None] = asyncio.Queue(maxsize=self._concurrency * 4)
         for u in norm_roots:
             fetch_queue.put_nowait((u, set(), 0))
 
-        # Number of items currently being processed (in flight).
-        in_flight = 0
-        # Event set when the worker pool goes fully idle.
-        pool_idle = asyncio.Event()
-        # Push a sentinel through the URL queue so the consumer wakes
-        # up when the pool goes idle.
-        POOL_IDLE = object()
-
-        n_workers = min(len(norm_roots), self._concurrency)
-
         async def worker() -> None:
-            nonlocal in_flight
-            try:
-                while True:
-                    item = await fetch_queue.get()
-                    if item is None:
-                        fetch_queue.task_done()
-                        break
-                    url, parents, level = item
-                    in_flight += 1
-                    try:
-                        async for page_url in self._process_streaming(
-                            url, parents, level, fetch_queue
-                        ):
-                            await url_queue.put(page_url)
-                    finally:
-                        fetch_queue.task_done()
-                        in_flight -= 1
-                        if in_flight == 0 and fetch_queue.empty():
-                            pool_idle.set()
-                            await url_queue.put(POOL_IDLE)
-            except asyncio.CancelledError:
-                raise
-            except Exception as ex:
-                log.warning("worker failed: %s", ex)
-
-        workers = [
-            asyncio.create_task(worker()) for _ in range(n_workers)
-        ]
-
-        try:
             while True:
-                # Wait for either a URL or the pool-idle signal.
-                get_task = asyncio.create_task(url_queue.get())
-                idle_task = asyncio.create_task(pool_idle.wait())
-                done, _ = await asyncio.wait(
-                    {get_task, idle_task},
-                    return_when=asyncio.FIRST_COMPLETED,
-                )
-                if get_task in done:
-                    url = get_task.result()
-                    idle_task.cancel()
-                    if url is POOL_IDLE:
-                        break
-                    yield url
-                else:
-                    get_task.cancel()
-                    # pool_idle fired. Drain any remaining items,
-                    # then exit.
-                    while not url_queue.empty():
-                        try:
-                            item = url_queue.get_nowait()
-                            if item is not POOL_IDLE:
-                                yield item
-                        except asyncio.QueueEmpty:
-                            break
+                item = await fetch_queue.get()
+                if item is None:
+                    fetch_queue.task_done()
+                    return
+                url, parents, level = item
+                try:
+                    async for page_url in self._process_streaming(
+                        url, parents, level, fetch_queue
+                    ):
+                        await url_queue.put(page_url)
+                finally:
+                    fetch_queue.task_done()
+
+        async with anyio.create_task_group() as tg:
+            for _ in range(self._concurrency):
+                tg.start_soon(worker)
+
+            async def stopper():
+                await fetch_queue.join()
+                for _ in range(self._concurrency):
+                    await fetch_queue.put(None)
+            tg.start_soon(stopper)
+
+            while True:
+                item = await url_queue.get()
+                if item is None:
                     break
-        finally:
-            for w in workers:
-                if not w.done():
-                    w.cancel()
-            await asyncio.gather(*workers, return_exceptions=True)
+                yield item
 
     # ------------------------------------------------------------------
     # Internal: budget + state
@@ -443,17 +396,10 @@ class AsyncCrawler:
                 from . import rust_parser
                 if kind == "pages":
                     # Stream raw URL strings — no SitemapPage / pickle.
-                    log.debug("rust pages: %s, %d URLs", final_url, len(list(rust_parser.parse_pages_urls(content_bytes)[:0])))
-                    for u in rust_parser.parse_pages_urls(content_bytes):
-                        yield u
+                    yield from rust_parser.parse_pages_urls(content_bytes)
                     return
                 # kind == "index"
                 child_urls_raw = rust_parser.parse_index_urls(content_bytes)
-                # Apply the caller's cap/callback so the recurse_list
-                # contract holds (same as the lxml / expat paths).
-                child_urls_raw = self._recurse_list_callback(
-                    child_urls_raw, level, new_parents,
-                )
                 self._enqueue_children(
                     child_urls_raw, final_url, new_parents, level, queue
                 )
@@ -471,18 +417,8 @@ class AsyncCrawler:
             return
 
         if isinstance(sitemap, INDEX_TYPES):
-            # Apply the recurse_list_callback so the cap is honoured
-            # on every parser path (Rust, lxml, expat).
-            n_before = len(child_urls_raw or [])
-            child_urls_raw = self._recurse_list_callback(
-                child_urls_raw or [], level, new_parents,
-            )
-            log.debug(
-                "expat index: %d -> %d at level %d",
-                n_before, len(child_urls_raw), level,
-            )
             self._enqueue_children(
-                child_urls_raw, final_url, new_parents, level, queue
+                child_urls_raw or [], final_url, new_parents, level, queue
             )
         else:  # PagesXMLSitemap (or similar)
             try:
@@ -501,11 +437,6 @@ class AsyncCrawler:
     ) -> None:
         if not child_urls_raw:
             return
-        log.debug(
-            "_enqueue_children: input=%d, after_cap=%d",
-            len(child_urls_raw),
-            len(self._recurse_list_callback(child_urls_raw, level, new_parents)),
-        )
         child_urls = self._recurse_list_callback(
             child_urls_raw, level, new_parents
         )
@@ -561,14 +492,15 @@ class AsyncCrawler:
 
         try:
             content_bytes = ungzipped_bytes(
-                final_url, response.raw_data(), response.header("content-type"),
+                url, response.raw_data(), response.header("content-type"),
                 max_uncompressed_bytes=self._max_uncompressed,
             )
         except Exception as ex:
-            log.warning("decompress %s: %s", final_url, ex)
             self._sitemaps_failed += 1
+            self._results[url] = InvalidSitemap(url=url, reason=f"decompress: {ex}")
             return
 
+        self._sitemaps_fetched += 1
         new_parents = parent_urls | {final_url}
 
         sitemap, child_urls_raw = self._parse_one(

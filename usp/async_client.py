@@ -293,17 +293,7 @@ class _AsyncResponse:
         return self._data
 
     def header(self, name: str) -> str | None:
-        # ``httpx.Headers`` is itself case-insensitive, so this works
-        # for both plain-dict and ``Headers`` inputs.
-        h = self._headers.get(name)
-        if h is not None:
-            return h
-        # Fallback: case-insensitive scan of plain dicts.
-        lname = name.lower()
-        for k, v in self._headers.items():
-            if k.lower() == lname:
-                return v
-        return None
+        return self._headers.get(name.lower())
 
     def url(self) -> str:
         return self._url
