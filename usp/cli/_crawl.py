@@ -30,7 +30,7 @@ from pathlib import Path
 from typing import Any, Callable, Iterable, Iterator
 
 from usp import __version__
-from usp.cli._util import setup_logging
+from usp.cli._log import kv, setup_logging
 
 log = logging.getLogger("usp-max.crawl")
 
@@ -171,6 +171,7 @@ def _crawl_async(homepage: str, args: argparse.Namespace) -> Iterator[str]:
 
     rec = []
     seen_count = [0]
+    crawl_started = [time.monotonic()]
 
     async def run() -> None:
         async with AsyncWebClient(
@@ -194,16 +195,21 @@ def _crawl_async(homepage: str, args: argparse.Namespace) -> Iterator[str]:
                 use_lxml=args.parser != "expat",
                 use_rust=args.parser != "expat",
             )
-            homepage_url = homepage
-            if args.strip_url:
-                # Normalize to bare homepage
-                pass
-            tree = await crawler.crawl([homepage_url])
+            log.info("→ crawl started  %s", kv(
+                homepage=homepage,
+                concurrency=args.concurrency,
+                parser="auto",
+            ))
+            crawl_started[0] = time.monotonic()
+            tree = await crawler.crawl([homepage])
 
-            # Walk the tree once, yielding pages. We materialize pages
-            # per-sitemap so peak RSS stays bounded to one sitemap's
-            # worth of pages at a time (PagesXMLSitemap loads from a
-            # tempfile).
+            elapsed = time.monotonic() - crawl_started[0]
+            log.info("✓ crawl finished  %s", kv(
+                sitemaps_fetched=crawler.sitemaps_fetched,
+                sitemaps_failed=crawler.sitemaps_failed,
+                elapsed_s=round(elapsed, 2),
+            ))
+
             async def walk(node):
                 from usp.objects.sitemap import (
                     AbstractSitemap,
@@ -346,10 +352,22 @@ def register(subparsers: argparse._SubParsersAction) -> None:
 def run(args: argparse.Namespace) -> None:
     verbosity = 2 if args.verbose else (0 if args.quiet else 1)
     setup_logging(verbosity=verbosity, log_path=None)
-    log.info("usp-max %s — crawling %s", __version__, args.url)
+
+    log.info("→ usp-max %s", __version__)
+    log.info("  %s", kv(
+        url=args.url,
+        out=str(args.output),
+        batch=args.batch_size,
+        format=args.format,
+        compress=args.compress,
+        tar=args.tar,
+        concurrency=args.concurrency,
+        fanout_cap=args.fanout_cap,
+        parser=args.parser,
+        backend=args.backend,
+    ))
+
     args.output.mkdir(parents=True, exist_ok=True)
-    log.info("output dir: %s (batch=%d, format=%s, compress=%s, tar=%s)",
-             args.output, args.batch_size, args.format, args.compress, args.tar)
 
     started = time.monotonic()
     written_total = 0
@@ -370,7 +388,6 @@ def run(args: argparse.Namespace) -> None:
             current_path, args.compress, args.tar,
         )
         current_count = 0
-        log.info("opened batch %s", current_path)
 
     def close_batch() -> None:
         nonlocal current_count, batch_index, current_path
@@ -379,8 +396,13 @@ def run(args: argparse.Namespace) -> None:
             return
         current_finalize()
         size = current_path.stat().st_size if current_path.exists() else 0
-        log.info("closed batch %s (urls=%d, bytes=%d)",
-                 current_path, current_count, size)
+        elapsed = time.monotonic() - started
+        rate = current_count / elapsed if elapsed > 0 else 0.0
+        log.info(
+            "  ✓ %s  %s",
+            current_path.name,
+            kv(urls=current_count, bytes=size, urls_per_s=round(rate, 1)),
+        )
         if progress_fh:
             progress_fh.write(
                 f'{{"event":"batch","index":{batch_index + 1},'
@@ -402,28 +424,21 @@ def run(args: argparse.Namespace) -> None:
         urls = _crawl_async(args.url, args)
 
     import json as _json
+    last_report = time.monotonic()
     for url in urls:
         line = (url + "\n") if args.format == "txt" else (_json.dumps({"url": url}) + "\n")
         current_writer(line.encode("utf-8"))
         current_count += 1
         written_total += 1
-        if progress_fh and written_total % 10_000 == 0:
-            progress_fh.write(
-                f'{{"event":"urls","total":{written_total}}}\n'
+        # Periodic progress every 30s with running totals
+        now = time.monotonic()
+        if now - last_report > 30:
+            elapsed = now - started
+            log.info(
+                "  · progress  %s",
+                kv(total=written_total, urls_per_s=round(written_total / elapsed, 1)),
             )
-            progress_fh.flush()
-        if current_count >= args.batch_size:
-            close_batch()
-            open_batch()
-
-    if current_writer is not None:
-        close_batch()
-
-    for url in urls:
-        line = (url + "\n") if args.format == "txt" else (f'{{"url":{json_quote(url)}}}\n')
-        current_writer(line.encode("utf-8"))
-        current_count += 1
-        written_total += 1
+            last_report = now
         if progress_fh and written_total % 10_000 == 0:
             progress_fh.write(
                 f'{{"event":"urls","total":{written_total}}}\n'
@@ -437,13 +452,19 @@ def run(args: argparse.Namespace) -> None:
         close_batch()
 
     elapsed = time.monotonic() - started
-    log.info("done: %d urls in %.1fs (%.0f urls/s)",
-             written_total, elapsed,
-             written_total / elapsed if elapsed > 0 else 0.0)
+    rate = written_total / elapsed if elapsed > 0 else 0.0
+    log.info("✓ done  %s", kv(
+        urls=written_total,
+        batches=batch_index,
+        elapsed_s=round(elapsed, 2),
+        urls_per_s=round(rate, 1),
+        out=str(args.output),
+    ))
+
     if progress_fh:
         progress_fh.write(
             f'{{"event":"done","urls":{written_total},'
-            f'"rate":{written_total / max(elapsed, 1e-9):.1f}}}\n'
+            f'"rate":{rate:.1f}}}\n'
         )
         progress_fh.close()
 
@@ -460,16 +481,11 @@ def run(args: argparse.Namespace) -> None:
             "compress": args.compress,
             "tar": args.tar,
             "elapsed_seconds": round(elapsed, 3),
-            "rate_urls_per_s": round(written_total / max(elapsed, 1e-9), 1),
+            "rate_urls_per_s": round(rate, 1),
             "backend": args.backend,
             "parser": args.parser,
         }, f, indent=2)
-    log.info("manifest: %s", manifest_path)
-
-
-def json_quote(s: str) -> str:
-    """JSON-encode a string literal (just enough for our needs)."""
-    return _json.dumps(s)
+    log.info("  manifest: %s", manifest_path)
 
 
 # ----------------------------------------------------------------------
