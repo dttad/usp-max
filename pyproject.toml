@@ -1,17 +1,21 @@
 [project]
 name = "ultimate-sitemap-parser"
-version = "1.8.1"
-description = "A performant library for parsing and crawling sitemaps"
+version = "1.9.0"
+description = "A performant library for parsing and crawling sitemaps (usp-max fork)"
 authors = [
     { name = "Linas Valiukas", email = "linas@media.mit.edu" },
     { name = "Hal Roberts", email = "hroberts@cyber.law.harvard.edu" },
     { name = "Freddy Heppell", email = "f.heppell@sheffield.ac.uk" },
+    { name = "dttad", email = "dttad@users.noreply.github.com" },
 ]
 requires-python = ">=3.10"
 readme = "README.rst"
 license = "GPL-3.0-or-later"
 license-files = ["LICENSE", "NOTICE"]
-maintainers = [{ name = "Freddy Heppell", email = "f.heppell@sheffield.ac.uk" }]
+maintainers = [
+    { name = "Freddy Heppell", email = "f.heppell@sheffield.ac.uk" },
+    { name = "dttad", email = "dttad@users.noreply.github.com" },
+]
 keywords = [
     "sitemap",
     "crawler",
@@ -69,7 +73,9 @@ fast = [
 [project.urls]
 homepage = "https://ultimate-sitemap-parser.readthedocs.io/"
 documentation = "https://ultimate-sitemap-parser.readthedocs.io/"
-repository = "https://github.com/GateNLP/ultimate-sitemap-parser"
+repository = "https://github.com/dttad/usp-max"
+upstream = "https://github.com/GateNLP/ultimate-sitemap-parser"
+changelog = "https://github.com/dttad/usp-max/blob/develop/bench/results/FINAL-REPORT.md"
 
 [project.scripts]
 usp = "usp.cli:main"
