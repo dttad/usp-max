@@ -101,6 +101,16 @@ usp-max crawl https://play.google.com/ \
     --tar \
     --concurrency 32 \
     --fanout-cap 500
+
+# Through a proxy
+usp-max crawl https://play.google.com/ --proxy http://127.0.0.1:8080
+```
+
+### As a web service (paste-a-URL UI)
+
+```bash
+usp-max serve --host 0.0.0.0 --port 8088
+# open http://localhost:8088 in a browser
 ```
 
 Output:
@@ -283,6 +293,7 @@ Filename pattern: `urls-NNNNN.{txt|jsonl}[.tar][.gz|.zst]`
 |---|---|---|
 | `--backend {sync,async}` | `async` | Crawler backend (sync uses upstream `SitemapFetcher`) |
 | `--parser {expat,auto}` | `auto` | `auto` = Rust → lxml → expat; `expat` = force sync |
+| `--proxy URL` | unset | HTTP/HTTPS/SOCKS5 proxy URL, e.g. `http://127.0.0.1:8080` or `socks5://user:pass@host:1080`. SOCKS requires `httpx[socks]`. |
 
 ### Logging
 
@@ -299,19 +310,72 @@ Filename pattern: `urls-NNNNN.{txt|jsonl}[.tar][.gz|.zst]`
 usp-max crawl https://example.com/
 
 # 2) Larger batches, zstd + tar, more workers
-usp-max crawl https://example.com/ \
+usp-max crawl https://example.com \
     -o /data/run-$(date +%Y%m%d) \
     --batch-size 100000 \
     --compress zstd --tar \
     --concurrency 64 --fanout-cap 500
 
 # 3) Bounded run (stop after 1 hour or 10M URLs)
-usp-max crawl https://example.com/ \
+usp-max crawl https://example.com \
     --deadline-seconds 3600 --max-urls 10000000 \
     --progress-json /var/log/run.jsonl
 
 # 4) Sync / expat fallback (no extra deps, original API)
-usp-max crawl https://example.com/ --backend sync --parser expat
+usp-max crawl https://example.com --backend sync --parser expat
+
+# 5) Through a local HTTP proxy (Burp / mitmproxy / corporate gateway)
+usp-max crawl https://example.com --proxy http://127.0.0.1:8080
+
+# 6) Through a SOCKS5 proxy (install `httpx[socks]` first)
+usp-max crawl https://example.com --proxy socks5://user:pass@127.0.0.1:1080
+```
+
+## Web UI
+
+A small React + Vite + Tailwind SPA lives in `web/` and talks to a
+Starlette + uvicorn backend bundled with this fork. Paste a URL, watch
+the crawler run with live logs streaming over Server-Sent Events, then
+grab the URL list as a `.txt` file.
+
+### Quick start
+
+```bash
+# Backend
+pip install -e '.[full]'                     # brings in starlette + uvicorn
+usp-max serve --host 0.0.0.0 --port 8088     # listens on 0.0.0.0:8088
+
+# Frontend dev (in another terminal)
+cd web && npm install && npm run dev         # http://localhost:5173
+
+# Or build the SPA once and serve it from the same port
+cd web && npm run build                      # writes web/dist
+usp-max serve --host 0.0.0.0 --port 8088     # picks up web/dist automatically
+```
+
+The UI lets you set URL, concurrency, fanout cap, max depth, parser
+backend, **and proxy** (HTTP / HTTPS / SOCKS5). Logs and progress
+stream in real time; on completion the discovered URL list and a JSON
+manifest are downloadable.
+
+### API (additive, does not touch the sync API)
+
+| Method & path | Description |
+|---|---|
+| `GET  /api/health` | `{"ok": true, "version": …}` |
+| `POST /api/crawl` | Start a crawl. Body: `{url, concurrency?, fanout_cap?, max_depth?, parser?, proxy?}`. Returns the job id. |
+| `GET  /api/jobs` | List all known jobs (most recent first). |
+| `GET  /api/jobs/{id}` | Snapshot of one job (status, settings, stats). |
+| `DELETE /api/jobs/{id}` | Cancel a running job. |
+| `GET  /api/jobs/{id}/stream` | Server-Sent Events: `snapshot`, `started`, `log`, `progress`, `heartbeat`, `done`/`error`/`cancelled`. |
+| `GET  /api/jobs/{id}/urls` | The discovered URLs as `text/plain` (live-friendly, file grows as the crawl runs). |
+| `GET  /api/jobs/{id}/manifest` | JSON manifest for the job. |
+
+CLI quick reference:
+
+```
+usp-max serve [--host 0.0.0.0] [--port 8088]
+              [--output-dir DIR] [--reload] [--workers N] [-q]
 ```
 
 ## Architecture
@@ -369,20 +433,31 @@ usp-max/
 │   ├── objects/               # domain types — UNCHANGED
 │   ├── web_client/            # sync web client — UNCHANGED
 │   ├── fetcher/               # NEW: async / parallel / multi-parser
-│   │   ├── async_client.py    #   httpx[http2] async client
+│   │   ├── async_client.py    #   httpx[http2] async client (+ proxy)
 │   │   ├── crawler.py         #   worker-pool AsyncCrawler
 │   │   ├── lxml_parser.py     #   lxml.iterparse backend (Phase 7a)
 │   │   └── rust_parser.py     #   usp_fast wrapper (Phase 7c)
-│   └── cli/
-│       ├── cli.py             # legacy `usp ls`
-│       ├── _ls.py             # legacy ls command
-│       └── _crawl.py          # NEW: `usp-max crawl` command
+│   ├── cli/
+│   │   ├── cli.py             # legacy `usp ls`
+│   │   ├── _ls.py             # legacy ls command
+│   │   ├── _crawl.py          # NEW: `usp-max crawl` command (+ --proxy)
+│   │   ├── _serve.py          # NEW: `usp-max serve` command
+│   │   ├── _inspect.py        # post-crawl helpers (ls / wc / manifest / extract)
+│   │   └── _log.py            # pretty formatter used by crawl + web UI
+│   └── web/                   # NEW: web UI backend (Starlette + SSE)
+│       ├── app.py             # routes: /api/crawl, /api/jobs/.../stream, ...
+│       └── service.py         # crawl job registry + log handler
 ├── usp/cli_main.py            # NEW: usp-max entry point
+├── web/                       # NEW: React + Vite + Tailwind SPA
+│   ├── package.json
+│   ├── vite.config.ts         # /api proxied to localhost:8088 in dev
+│   ├── index.html
+│   └── src/                   # App, CrawlForm, LogPanel, StatusBar, ...
 ├── rust/                      # Phase 7c: PyO3 + quick-xml
 │   ├── Cargo.toml
 │   └── src/lib.rs             # parse_pages, parse_index
 ├── bench/                     # benchmark harness
-│   ├── corpus/               #   250 gzipped sub-sitemaps + 2 indexes
+│   ├── corpus/                #   250 gzipped sub-sitemaps + 2 indexes
 │   ├── serve_corpus.py        #   local replay server
 │   ├── fetch_corpus.py        #   corpus fetcher
 │   ├── run.py                 #   sync benchmark runner
@@ -392,7 +467,7 @@ usp-max/
 │   ├── profile.py             #   pyinstrument / memray driver
 │   └── results/               #   PROFILE.md, PHASE*.md, FINAL-REPORT.md, *.json
 ├── Dockerfile                 # multi-stage: rust build + slim runtime
-├── pyproject.toml             # optional-dependencies: async / lxml / rust / fast
+├── pyproject.toml             # optional-deps: async / lxml / rust / fast / web / full
 ├── CLAUDE.md                  # workflow rules for AI agents
 └── MASTER-PLAN-usp-perf.md    # the original optimization plan (all gates met)
 ```

@@ -11,7 +11,6 @@ import gzip
 import io
 import logging
 import random
-import time
 from typing import Any
 
 import httpx
@@ -143,6 +142,7 @@ class AsyncWebClient:
         "_backoff_base",
         "_backoff_cap",
         "_max_retry_after",
+        "_proxy",
     )
 
     def __init__(
@@ -159,11 +159,13 @@ class AsyncWebClient:
         backoff_base: float = 0.5,
         backoff_cap: float = 30.0,
         max_retry_after: float = 60.0,
+        proxy: str | None = None,
     ):
         limits = httpx.Limits(
             max_connections=max_connections,
             max_keepalive_connections=max_keepalive_connections,
         )
+        self._proxy = proxy or None
         self._client = httpx.AsyncClient(
             http2=http2,
             timeout=httpx.Timeout(timeout[1], connect=timeout[0]),
@@ -171,6 +173,7 @@ class AsyncWebClient:
             limits=limits,
             follow_redirects=follow_redirects,
             headers={"User-Agent": user_agent, "Accept-Encoding": "gzip"},
+            proxy=self._proxy,
         )
         self._max_data_length: int | None = None
         self.user_agent = user_agent
@@ -179,10 +182,15 @@ class AsyncWebClient:
         self._backoff_cap = backoff_cap
         self._max_retry_after = max_retry_after
 
+    @property
+    def proxy(self) -> str | None:
+        """Return the configured proxy URL (``None`` for direct connect)."""
+        return self._proxy
+
     def set_max_response_data_length(self, n: int | None) -> None:
         self._max_data_length = n
 
-    async def get(self, url: str) -> "_AsyncResponse":
+    async def get(self, url: str) -> _AsyncResponse:
         """Fetch URL with retry. Returns :class:`_AsyncResponse` even on errors.
 
         On any non-retryable error, the returned response has
@@ -252,7 +260,7 @@ class AsyncWebClient:
     async def aclose(self) -> None:
         await self._client.aclose()
 
-    async def __aenter__(self) -> "AsyncWebClient":
+    async def __aenter__(self) -> AsyncWebClient:
         return self
 
     async def __aexit__(self, *exc: Any) -> None:
@@ -281,7 +289,7 @@ class _AsyncResponse:
     @classmethod
     def from_error(
         cls, url: str, error: BaseException, *, status: int = 0
-    ) -> "_AsyncResponse":
+    ) -> _AsyncResponse:
         r = cls(url=url, status_code=status, data=b"", headers={})
         r._error = error
         return r

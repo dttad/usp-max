@@ -1,10 +1,8 @@
 """Tests for usp.fetcher.async_client — retry, backoff, error surfacing."""
 from __future__ import annotations
 
-import asyncio
 import time
-from typing import Any
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import AsyncMock
 
 import httpx
 import pytest
@@ -17,7 +15,6 @@ from usp.fetcher.async_client import (
     _backoff_sleep,
     _parse_retry_after,
 )
-
 
 # --- _backoff_sleep() ---------------------------------------------------
 
@@ -67,7 +64,7 @@ def _mk_response(
     url: str = "https://x/",
     body: bytes = b"<ok/>",
     headers: dict | None = None,
-) -> "_AsyncResponse":
+) -> _AsyncResponse:
     return _AsyncResponse(
         url=url, status_code=status, data=body, headers=headers or {}
     )
@@ -251,3 +248,74 @@ def test_response_header_lookup_is_case_insensitive():
     assert r.header("content-type") == "text/plain"
     assert r.header("CONTENT-TYPE") == "text/plain"
     assert r.header("x-not-here") is None
+
+
+# --- proxy support -----------------------------------------------------
+
+def test_proxy_none_by_default():
+    """No proxy is configured unless explicitly requested."""
+    cli = AsyncWebClient()
+    assert cli.proxy is None
+
+
+def test_proxy_string_is_recorded_and_forwarded(monkeypatch):
+    """Passing ``proxy=...`` records it on the client and is forwarded to httpx."""
+    captured: dict[str, object] = {}
+
+    real_async_client = httpx.AsyncClient
+    def spy_async_client(*args, **kwargs):
+        captured["proxy"] = kwargs.get("proxy")
+        return real_async_client(*args, **kwargs)
+
+    monkeypatch.setattr(
+        "usp.fetcher.async_client.httpx.AsyncClient", spy_async_client
+    )
+    cli = AsyncWebClient(proxy="http://127.0.0.1:8080")
+    assert cli.proxy == "http://127.0.0.1:8080"
+    assert captured["proxy"] == "http://127.0.0.1:8080"
+
+
+def test_proxy_socks5_url_accepted(monkeypatch):
+    """socks5:// URLs are valid for httpx when httpx[socks] is installed."""
+    captured: dict[str, object] = {}
+
+    real_async_client = httpx.AsyncClient
+    def spy_async_client(*args, **kwargs):
+        captured["proxy"] = kwargs.get("proxy")
+        return real_async_client(*args, **kwargs)
+
+    monkeypatch.setattr(
+        "usp.fetcher.async_client.httpx.AsyncClient", spy_async_client
+    )
+    cli = AsyncWebClient(proxy="socks5://user:pass@127.0.0.1:1080")
+    assert cli.proxy == "socks5://user:pass@127.0.0.1:1080"
+    assert captured["proxy"] == "socks5://user:pass@127.0.0.1:1080"
+
+
+def test_proxy_empty_string_is_treated_as_none(monkeypatch):
+    """Passing ``proxy=''`` is equivalent to no proxy."""
+    captured: dict[str, object] = {}
+
+    real_async_client = httpx.AsyncClient
+    def spy_async_client(*args, **kwargs):
+        captured["proxy"] = kwargs.get("proxy")
+        return real_async_client(*args, **kwargs)
+
+    monkeypatch.setattr(
+        "usp.fetcher.async_client.httpx.AsyncClient", spy_async_client
+    )
+    cli = AsyncWebClient(proxy="")
+    assert cli.proxy is None
+    # We deliberately pass None (not "") so httpx's own short-circuit
+    # matches the documented "no proxy" semantics.
+    assert captured["proxy"] is None
+
+
+@pytest.mark.asyncio
+async def test_get_uses_proxy_when_configured(monkeypatch):
+    """A request through a proxy-ful client still surfaces the response."""
+    cli = AsyncWebClient(proxy="http://127.0.0.1:8080")
+    fake = _mk_httpx_response(status_code=200)
+    monkeypatch.setattr(cli._client, "get", AsyncMock(return_value=fake))
+    resp = await cli.get("https://x/feed")
+    assert resp.status_code() == 200
