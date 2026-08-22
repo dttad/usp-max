@@ -1,0 +1,13 @@
+{
+  "usp-max": "1.9.0",
+  "url": "http://127.0.0.1:8765/robots.txt",
+  "urls_total": 156934,
+  "batch_size": 5000,
+  "format": "txt",
+  "compress": "zstd",
+  "tar": true,
+  "elapsed_seconds": 11.092,
+  "rate_urls_per_s": 14148.0,
+  "backend": "async",
+  "parser": "auto"
+}
