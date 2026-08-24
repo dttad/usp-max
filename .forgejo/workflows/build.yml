@@ -16,7 +16,7 @@ jobs:
   build:
     runs-on: self-hosted
     container:
-      image: docker:27-cli
+      image: node:20-bookworm
     services:
       docker-dind:
         image: docker:27-dind
@@ -24,6 +24,25 @@ jobs:
     env:
       DOCKER_HOST: tcp://docker-dind:2375
     steps:
+      - name: Install docker CLI
+        run: |
+          curl -fsSL https://download.docker.com/linux/static/stable/x86_64/docker-27.0.0.tgz \
+            | tar -xz -C /tmp
+          mv /tmp/docker/docker /usr/local/bin/docker
+          docker --version
+
+      - name: Wait for DinD
+        run: |
+          for i in $(seq 1 30); do
+            if docker info >/dev/null 2>&1; then
+              echo "DinD ready"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "DinD not ready after 30s"
+          exit 1
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
