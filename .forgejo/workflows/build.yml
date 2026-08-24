@@ -9,8 +9,7 @@ on:
 
 env:
   REGISTRY: forgejo.mercat-qilin.ts.net
-  PROJECT: usp-max
-  IMAGE: usp-max
+  IMAGE: dat/usp-max
 
 jobs:
   build:
@@ -43,15 +42,15 @@ jobs:
           BRANCH="$GITHUB_REF_NAME"
           REF_TYPE="${{ github.ref_type }}"
 
-          TAGS="${REGISTRY}/${PROJECT}/${IMAGE}:build-${SHA}"
-          TAGS="${TAGS} ${REGISTRY}/${PROJECT}/${IMAGE}:branch-${BRANCH}"
+          TAGS="${REGISTRY}/${IMAGE}:build-${SHA}"
+          TAGS="${TAGS} ${REGISTRY}/${IMAGE}:branch-${BRANCH}"
 
           if [ "$BRANCH" = "main" ]; then
-            TAGS="${TAGS} ${REGISTRY}/${PROJECT}/${IMAGE}:latest"
+            TAGS="${TAGS} ${REGISTRY}/${IMAGE}:latest"
           fi
 
           if [ "$REF_TYPE" = "tag" ]; then
-            TAGS="${TAGS} ${REGISTRY}/${PROJECT}/${IMAGE}:${BRANCH}"
+            TAGS="${TAGS} ${REGISTRY}/${IMAGE}:${BRANCH}"
           fi
 
           {
@@ -65,14 +64,14 @@ jobs:
           docker build \
             --build-arg "USP_MAX_VERSION=${GITHUB_REF_NAME}" \
             --build-arg "USP_MAX_GIT_SHA=${GITHUB_SHA}" \
-            -t "${REGISTRY}/${PROJECT}/${IMAGE}:local" \
+            -t "${REGISTRY}/${IMAGE}:local" \
             .
 
       - name: Push (skip PR)
         if: github.event_name != 'pull_request'
         run: |
           for tag in ${{ steps.meta.outputs.tags }}; do
-            docker tag "${REGISTRY}/${PROJECT}/${IMAGE}:local" "$tag"
+            docker tag "${REGISTRY}/${IMAGE}:local" "$tag"
             docker push "$tag"
           done
 
