@@ -32,8 +32,8 @@ jobs:
       - name: Login to Forgejo registry
         if: github.event_name != 'pull_request'
         run: |
-          echo "${{ secrets.FORGEJO_TOKEN }}" | docker login "$REGISTRY" \
-            -u "${{ github.actor }}" --password-stdin
+          echo "${{ secrets.REGISTRY_TOKEN }}" | docker login "$REGISTRY" \
+            -u "${{ secrets.REGISTRY_USER }}" --password-stdin
 
       - name: Compute metadata
         id: meta
