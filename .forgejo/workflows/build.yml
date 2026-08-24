@@ -30,11 +30,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Login to Harbor
+      - name: Login to Forgejo registry
         if: github.event_name != 'pull_request'
         run: |
-          echo "${{ secrets.HARBOR_PASSWORD }}" | docker login "$REGISTRY" \
-            -u "${{ secrets.HARBOR_USERNAME }}" --password-stdin
+          echo "${{ secrets.FORGEJO_TOKEN }}" | docker login "$REGISTRY" \
+            -u "${{ secrets.FORGEJO_USERNAME }}" --password-stdin
 
       - name: Compute metadata
         id: meta
