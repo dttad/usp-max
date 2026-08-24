@@ -99,7 +99,8 @@ COPY web/ /home/uspmax/web/
 # /install so its pip-installed packages are usable, and create the
 # default output dir owned by uspmax.
 RUN useradd --create-home --uid 1000 uspmax \
-    && chown -R uspmax:uspmax /install
+    && chown -R uspmax:uspmax /install \
+    && chown -R uspmax:uspmax /home/uspmax
 
 ENV PATH="/install/bin:${PATH}" \
     PYTHONDONTWRITEBYTECODE=1 \
