@@ -15,6 +15,14 @@ env:
 jobs:
   build:
     runs-on: self-hosted
+    container:
+      image: docker:27-cli
+    services:
+      docker-dind:
+        image: docker:27-dind
+        options: --privileged
+    env:
+      DOCKER_HOST: tcp://docker-dind:2375
     steps:
       - name: Checkout
         uses: actions/checkout@v4
