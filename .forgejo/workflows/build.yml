@@ -1,0 +1,77 @@
+name: Build & Push Docker Image
+
+on:
+  push:
+    branches: [main, master, develop]
+    tags: ['v*']
+  pull_request:
+    branches: [main, master, develop]
+
+env:
+  REGISTRY: cr.mercat-qilin.ts.net
+  PROJECT: usp-max
+  IMAGE: usp-max
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Login to Harbor
+        if: github.event_name != 'pull_request'
+        run: |
+          echo "${{ secrets.HARBOR_PASSWORD }}" | docker login "$REGISTRY" \
+            -u "${{ secrets.HARBOR_USERNAME }}" --password-stdin
+
+      - name: Compute metadata
+        id: meta
+        run: |
+          SHA=$(echo "$GITHUB_SHA" | cut -c1-8)
+          BRANCH="$GITHUB_REF_NAME"
+          REF_TYPE="${{ github.ref_type }}"
+
+          TAGS="${REGISTRY}/${PROJECT}/${IMAGE}:build-${SHA}"
+          TAGS="${TAGS} ${REGISTRY}/${PROJECT}/${IMAGE}:branch-${BRANCH}"
+
+          if [ "$BRANCH" = "main" ]; then
+            TAGS="${TAGS} ${REGISTRY}/${PROJECT}/${IMAGE}:latest"
+          fi
+
+          if [ "$REF_TYPE" = "tag" ]; then
+            TAGS="${TAGS} ${REGISTRY}/${PROJECT}/${IMAGE}:${BRANCH}"
+          fi
+
+          {
+            echo "tags<<EOF"
+            echo "$TAGS"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Build image
+        run: |
+          docker build \
+            --build-arg "USP_MAX_VERSION=${GITHUB_REF_NAME}" \
+            --build-arg "USP_MAX_GIT_SHA=${GITHUB_SHA}" \
+            -t "${REGISTRY}/${PROJECT}/${IMAGE}:local" \
+            .
+
+      - name: Push (skip PR)
+        if: github.event_name != 'pull_request'
+        run: |
+          for tag in ${{ steps.meta.outputs.tags }}; do
+            docker tag "${REGISTRY}/${PROJECT}/${IMAGE}:local" "$tag"
+            docker push "$tag"
+          done
+
+      - name: Build summary
+        run: |
+          echo "### Docker build & push" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Pushed tags:" >> "$GITHUB_STEP_SUMMARY"
+          for tag in ${{ steps.meta.outputs.tags }}; do
+            echo "- \`${tag}\`" >> "$GITHUB_STEP_SUMMARY"
+          done
